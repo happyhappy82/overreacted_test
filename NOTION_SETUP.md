@@ -69,7 +69,7 @@ Status 속성에 다음 옵션들을 추가:
 
 1. Integration이 생성되면 **"Internal Integration Token"** 표시됨
 2. **"Show"** 클릭 후 토큰 복사
-3. 형식: `secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+3. 형식: `ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` (또는 `secret_xxx...`)
 
 > 🔒 **보안**: 이 토큰을 절대 공개하지 마세요!
 
@@ -103,7 +103,7 @@ Status 속성에 다음 옵션들을 추가:
 
 **Secret 1: NOTION_API_KEY**
 - Name: `NOTION_API_KEY`
-- Value: `secret_xxxxxxxxxxxxxxxx` (2-2에서 복사한 토큰)
+- Value: `ntn_xxxxxxxxxxxxxxxx` (2-2에서 복사한 토큰, ntn_ 또는 secret_으로 시작)
 - **Add secret** 클릭
 
 **Secret 2: NOTION_DATABASE_ID**
