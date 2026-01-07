@@ -7,19 +7,7 @@ export default function Header() {
         className="inline-block text-2xl font-black"
         href="/"
       >
-        <span
-          style={{
-            "--myColor1": "var(--text)",
-            "--myColor2": "var(--text)",
-            backgroundImage:
-              "linear-gradient(45deg, var(--myColor1), var(--myColor2))",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-          } as React.CSSProperties}
-        >
-          overreacted
-        </span>
+        overreacted
       </Link>
       <span className="relative top-[4px] italic">
         by{" "}

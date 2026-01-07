@@ -44,20 +44,14 @@ export default async function PostPage({ params }: PostPageProps) {
     <>
       <Header />
       <main>
-        <article className="prose prose-lg dark:prose-invert max-w-none">
+        <article className="prose prose-lg max-w-none">
           <h1
             className="text-[48px] font-black leading-tight mb-2"
-            style={
-              {
-                "--lightLink": post.lightColor,
-                "--darkLink": post.darkColor,
-                color: "var(--lightLink)",
-              } as React.CSSProperties
-            }
+            style={{ color: post.lightColor }}
           >
             {post.title}
           </h1>
-          <p className="text-[13px] text-gray-700 dark:text-gray-300 mb-8">
+          <p className="text-[13px] text-gray-700 mb-8">
             {post.date} · {post.readingTime}
           </p>
           <div className="mt-8">

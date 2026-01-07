@@ -24,7 +24,6 @@ const nextConfig: NextConfig = {
       transform: "react-markdown",
     },
   },
-  swcMinify: true,
 };
 
 const withMDX = createMDX({

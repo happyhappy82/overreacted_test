@@ -15,7 +15,6 @@ export default function PostCard({
   excerpt,
   slug,
   lightColor,
-  darkColor,
 }: PostCardProps) {
   return (
     <Link
@@ -25,17 +24,11 @@ export default function PostCard({
       <article>
         <h2
           className="text-[28px] font-black leading-none mb-2"
-          style={
-            {
-              "--lightLink": lightColor,
-              "--darkLink": darkColor,
-              color: "var(--lightLink)",
-            } as React.CSSProperties
-          }
+          style={{ color: lightColor }}
         >
           {title}
         </h2>
-        <p className="text-[13px] text-gray-700 dark:text-gray-300">{date}</p>
+        <p className="text-[13px] text-gray-700">{date}</p>
         <p className="mt-1">{excerpt}</p>
       </article>
     </Link>

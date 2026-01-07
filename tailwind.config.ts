@@ -2,44 +2,38 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: "media",
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
       typography: {
         DEFAULT: {
           css: {
             maxWidth: "none",
-            color: "var(--text)",
+            color: "#000000",
             a: {
-              color: "var(--lightLink)",
+              color: "#0066cc",
               textDecoration: "underline",
               fontWeight: "500",
             },
             h1: {
-              color: "var(--text)",
+              color: "#000000",
               fontWeight: "800",
             },
             h2: {
-              color: "var(--text)",
+              color: "#000000",
               fontWeight: "700",
             },
             h3: {
-              color: "var(--text)",
+              color: "#000000",
               fontWeight: "600",
             },
             strong: {
-              color: "var(--text)",
+              color: "#000000",
             },
             code: {
-              color: "var(--text)",
+              color: "#000000",
             },
           },
         },
@@ -47,8 +41,5 @@ const config: Config = {
     },
   },
   plugins: [require("@tailwindcss/typography")],
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
 };
 export default config;
