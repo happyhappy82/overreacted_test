@@ -59,17 +59,19 @@ jobs:
           git add public/notion-images/*.webp
 
           # 커밋 메시지 생성
-          COMMIT_MSG="Sync blog posts from Notion
+          git commit -m "$(cat <<'EOF'
+          Sync blog posts from Notion
 
-Automated sync from Notion Database:
-- Convert published pages to markdown
-- Optimize images to WebP (1200px, quality 90)
-- Update frontmatter with page properties
+          Automated sync from Notion Database:
+          - Convert published pages to markdown
+          - Optimize images to WebP (1200px, quality 90)
+          - Update frontmatter with page properties
 
-🤖 Automated via Notion Sync
-Co-Authored-By: Notion Sync Bot <notion-sync[bot]@users.noreply.github.com>"
+          🤖 Automated via Notion Sync
+          Co-Authored-By: Notion Sync Bot <notion-sync[bot]@users.noreply.github.com>
+          EOF
+          )"
 
-          git commit -m "$COMMIT_MSG"
           git push origin main
 
       - name: Report completion
