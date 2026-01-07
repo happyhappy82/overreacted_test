@@ -12,6 +12,11 @@ const notion = new Client({
 
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
+// 디버그: Notion Client 확인
+console.log('Notion Client initialized:', !!notion);
+console.log('Notion Client has databases:', !!notion.databases);
+console.log('Notion Client has databases.query:', typeof notion.databases?.query);
+
 // ===========================
 // 유틸리티 함수
 // ===========================
