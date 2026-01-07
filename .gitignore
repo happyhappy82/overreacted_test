@@ -41,3 +41,7 @@ next-env.d.ts
 # ide
 .vscode
 .idea
+
+# temporary directories
+temp-uploads/
+temp-notion/

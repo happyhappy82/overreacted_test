@@ -1,0 +1,85 @@
+name: Sync Notion to Blog
+
+on:
+  schedule:
+    # 매 6시간마다 실행 (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+
+  workflow_dispatch:  # 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync from Notion
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: node scripts/sync-notion.js
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected"
+          fi
+
+      - name: Configure Git
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name "Notion Sync Bot"
+          git config --global user.email "notion-sync[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git add content/posts/*.md
+          git add public/notion-images/*.webp
+
+          # 커밋 메시지 생성
+          COMMIT_MSG="Sync blog posts from Notion
+
+Automated sync from Notion Database:
+- Convert published pages to markdown
+- Optimize images to WebP (1200px, quality 90)
+- Update frontmatter with page properties
+
+🤖 Automated via Notion Sync
+Co-Authored-By: Notion Sync Bot <notion-sync[bot]@users.noreply.github.com>"
+
+          git commit -m "$COMMIT_MSG"
+          git push origin main
+
+      - name: Report completion
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          echo "✅ Notion sync completed and deployed!"
+          echo "Vercel will automatically deploy the changes in 1-2 minutes."
+
+      - name: No changes
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: |
+          echo "ℹ️ No new or updated posts found in Notion"
+          echo "All published posts are already synced"
