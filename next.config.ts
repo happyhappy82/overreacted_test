@@ -15,14 +15,24 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ["react-icons", "react-markdown"],
+    optimizeCss: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
+  },
+  modularizeImports: {
+    "react-markdown": {
+      transform: "react-markdown",
+    },
   },
 };
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
 });
 
 export default withMDX(nextConfig);

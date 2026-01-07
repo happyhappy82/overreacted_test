@@ -10,17 +10,22 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "overreacted — A blog by Dan Abramov",
-  description: "A blog by Dan Abramov",
-  metadataBase: new URL("https://overreacted.io"),
+  description: "Personal blog by Dan Abramov. Deep dives into React, JavaScript, and software engineering.",
+  metadataBase: new URL("https://overreacted-test.vercel.app"),
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
   openGraph: {
     title: "overreacted",
-    description: "A blog by Dan Abramov",
+    description: "Personal blog by Dan Abramov. Deep dives into React, JavaScript, and software engineering.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "overreacted",
-    description: "A blog by Dan Abramov",
+    description: "Personal blog by Dan Abramov. Deep dives into React, JavaScript, and software engineering.",
   },
 };
 
