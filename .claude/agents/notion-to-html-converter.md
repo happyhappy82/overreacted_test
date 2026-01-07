@@ -28,8 +28,8 @@ You are an elite Notion-to-HTML conversion specialist with zero tolerance for da
 - Download each image immediately to `public/notion-images/` directory
 - Use slug-based naming for downloaded files (e.g., `article-title-image-1.jpg`)
 - **CRITICAL: Convert ALL images to WebP format** using sharp or similar tool
-  - Resize images to appropriate display size (max 800px width recommended)
-  - Use quality: 85 for optimal balance between size and quality
+  - Resize images to max 1200px width (Google prefers higher quality images)
+  - Use quality: 90 for excellent quality (increased from 85)
   - NEVER keep JPG/PNG originals - always convert to WebP
 - Update all image paths in markdown to point to .webp files (e.g., `/notion-images/article-title-image-1.webp`)
 - Delete original JPG/PNG files after successful WebP conversion
@@ -69,8 +69,8 @@ You are an elite Notion-to-HTML conversion specialist with zero tolerance for da
 
 **Image Optimization:**
 - **ALWAYS convert to WebP format** (NOT JPG or PNG)
-- Resize to max 800px width for optimal performance
-- Use sharp with quality: 85 setting
+- Resize to max 1200px width (Google values image quality over file size)
+- Use sharp with quality: 90 setting (high quality for better user experience)
 - Maintain aspect ratios during resize
 - **IMPORTANT**: Add width/height attributes to ALL img tags to prevent CLS (Cumulative Layout Shift)
 - Use lazy loading where appropriate (loading="lazy")
