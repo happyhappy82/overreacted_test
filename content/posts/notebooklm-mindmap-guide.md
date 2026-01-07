@@ -36,23 +36,23 @@ PC 웹 브라우저를 기반으로 마인드맵을 생성, 조작, 저장하는
 
 노트북LM 마인드맵 기능은 PC에서 들어갈 때 사용할 수 있습니다.
 
-![유튜브 영상 공유 버튼](/notion-images/notebooklm-1.jpg)
+![유튜브 영상 공유 버튼](/notion-images/notebooklm-1.webp)
 
 먼저 예시 영상을 하나 가져올게요. 유튜브 영상을 마인드맵화 시켜보겠습니다. 공유버튼을 클릭합니다.
 
-![웹사이트 클릭](/notion-images/notebooklm-2.jpg)
+![웹사이트 클릭](/notion-images/notebooklm-2.webp)
 
 웹사이트를 클릭합니다.
 
-![링크 삽입](/notion-images/notebooklm-3.jpg)
+![링크 삽입](/notion-images/notebooklm-3.webp)
 
 링크를 삽입합니다.
 
-![스튜디오 마인드맵](/notion-images/notebooklm-4.jpg)
+![스튜디오 마인드맵](/notion-images/notebooklm-4.webp)
 
 여기서 스튜디오란에 마인드맵을 클릭하세요.
 
-![마인드맵 확인 및 다운로드](/notion-images/notebooklm-5.jpg)
+![마인드맵 확인 및 다운로드](/notion-images/notebooklm-5.webp)
 
 마인드맵 형태를 확인합니다. 여기서 화살표 버튼을 누르면서 세부 내용들을 볼 수 있습니다. 우측 상단에 다운로드 버튼을 클릭해서 마인드맵을 저장할 수 있습니다.
 
@@ -73,7 +73,7 @@ PC 웹 브라우저를 기반으로 마인드맵을 생성, 조작, 저장하는
 
 현재 노트북LM 공식 모바일 앱에서는 마인드맵 생성 및 조회가 지원되지 않고 있습니다. 아래 사진을 보시면
 
-![모바일 버전](/notion-images/notebooklm-6.jpg)
+![모바일 버전](/notion-images/notebooklm-6.webp)
 
 노트북LM 모바일버전에서는 마인드맵 기능이 없습니다. 대신 텍스트 요약 기능을 활용해서 내용을 파악하시면 됩니다.
 
