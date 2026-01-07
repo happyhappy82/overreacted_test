@@ -71,12 +71,12 @@ export default async function PostPage({ params }: PostPageProps) {
               remarkPlugins={[remarkGfm]}
               components={{
                 h2: ({ children }) => {
-                  const text = String(children);
+                  const text = String(children).replace(/\*\*/g, '');
                   const id = generateId(text);
                   return <h2 id={id}>{children}</h2>;
                 },
                 h3: ({ children }) => {
-                  const text = String(children);
+                  const text = String(children).replace(/\*\*/g, '');
                   const id = generateId(text);
                   return <h3 id={id}>{children}</h3>;
                 }

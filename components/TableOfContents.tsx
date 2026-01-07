@@ -28,7 +28,8 @@ function extractHeadings(content: string): Heading[] {
 
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
-    const text = match[2];
+    // Remove markdown bold syntax (**text**)
+    const text = match[2].replace(/\*\*/g, '');
     const id = generateId(text);
 
     headings.push({ id, text, level });
