@@ -1,8 +1,18 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
+import TableOfContents from "@/components/TableOfContents";
 import { getPostBySlug, getSortedPostsData } from "@/lib/posts";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+function generateId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
 
 interface PostPageProps {
   params: Promise<{
@@ -44,6 +54,7 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <>
       <Header />
+      <TableOfContents content={post.content} />
       <main>
         <article className="prose prose-lg max-w-none">
           <h1
@@ -56,7 +67,21 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.date} · {post.readingTime}
           </p>
           <div className="mt-8">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h2: ({ children }) => {
+                  const text = String(children);
+                  const id = generateId(text);
+                  return <h2 id={id}>{children}</h2>;
+                },
+                h3: ({ children }) => {
+                  const text = String(children);
+                  const id = generateId(text);
+                  return <h3 id={id}>{children}</h3>;
+                }
+              }}
+            >
               {post.content}
             </ReactMarkdown>
           </div>

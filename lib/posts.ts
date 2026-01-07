@@ -30,14 +30,17 @@ export function getSortedPostsData(): Post[] {
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
 
-      const stats = readingTime(content);
+      // Remove first h1 heading from content to avoid duplicate title
+      const contentWithoutTitle = content.replace(/^#\s+.+\n*/m, '').trim();
+
+      const stats = readingTime(contentWithoutTitle);
 
       return {
         slug,
         title: data.title || slug,
         date: data.date || "",
         excerpt: data.excerpt || "",
-        content,
+        content: contentWithoutTitle,
         readingTime: stats.text,
         lightColor: data.lightColor || "lab(62.926 59.277 -1.573)",
         darkColor: data.darkColor || "lab(80.993 32.329 -7.093)",
@@ -70,14 +73,18 @@ export function getPostBySlug(slug: string): Post | null {
     }
 
     const { data, content } = matter(fileContents);
-    const stats = readingTime(content);
+
+    // Remove first h1 heading from content to avoid duplicate title
+    const contentWithoutTitle = content.replace(/^#\s+.+\n*/m, '').trim();
+
+    const stats = readingTime(contentWithoutTitle);
 
     return {
       slug,
       title: data.title || slug,
       date: data.date || "",
       excerpt: data.excerpt || "",
-      content,
+      content: contentWithoutTitle,
       readingTime: stats.text,
       lightColor: data.lightColor || "lab(62.926 59.277 -1.573)",
       darkColor: data.darkColor || "lab(80.993 32.329 -7.093)",
