@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import { getPostBySlug, getSortedPostsData } from "@/lib/posts";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface PostPageProps {
   params: Promise<{
@@ -55,7 +56,9 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.date} · {post.readingTime}
           </p>
           <div className="mt-8">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
           </div>
         </article>
       </main>
