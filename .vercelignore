@@ -1,0 +1,8 @@
+node_modules
+.next
+.git
+*.md
+!content/**/*.md
+plan.md
+techspec.md
+overreacted.io.md
