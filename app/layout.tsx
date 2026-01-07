@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nanum_Gothic } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const nanumGothic = Nanum_Gothic({
+  weight: ["400", "700", "800"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-nanum",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -35,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="mx-auto max-w-2xl bg-[--bg] px-5 py-12 text-[--text]">
+    <html lang="ko" className={nanumGothic.variable}>
+      <body className="mx-auto max-w-2xl bg-white px-5 py-12 text-black">
         {children}
       </body>
     </html>
