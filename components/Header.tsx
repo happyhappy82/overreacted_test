@@ -4,11 +4,7 @@ export default function Header() {
   return (
     <header className="mb-14 flex flex-row place-content-between">
       <Link
-        className="inline-block text-2xl font-black scale-100 active:scale-100"
-        style={{
-          opacity: 1,
-          transition: "transform 0.2s ease-in-out, opacity 0.2s 0.4s linear",
-        }}
+        className="inline-block text-2xl font-black"
         href="/"
       >
         <span
@@ -20,7 +16,6 @@ export default function Header() {
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             color: "transparent",
-            transition: "--myColor1 0.2s ease-out, --myColor2 0.2s ease-in-out",
           } as React.CSSProperties}
         >
           overreacted
@@ -30,11 +25,6 @@ export default function Header() {
         by{" "}
         <a
           target="_blank"
-          className="scale-100 active:scale-100"
-          style={{
-            opacity: 1,
-            transition: "transform 0.2s ease-in-out, opacity 0.2s 0.4s linear",
-          }}
           href="https://danabra.mov"
           rel="noopener noreferrer"
         >

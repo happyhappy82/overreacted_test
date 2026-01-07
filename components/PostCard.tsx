@@ -19,12 +19,8 @@ export default function PostCard({
 }: PostCardProps) {
   return (
     <Link
-      className="block py-4 hover:scale-[1.005] will-change-transform scale-100 active:scale-100"
+      className="block py-4"
       href={`/${slug}`}
-      style={{
-        opacity: 1,
-        transition: "transform 0.2s ease-in-out, opacity 0.2s linear 0.4s",
-      }}
     >
       <article>
         <h2

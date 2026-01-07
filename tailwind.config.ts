@@ -22,9 +22,6 @@ const config: Config = {
               color: "var(--lightLink)",
               textDecoration: "underline",
               fontWeight: "500",
-              "&:hover": {
-                color: "var(--darkLink)",
-              },
             },
             h1: {
               color: "var(--text)",
