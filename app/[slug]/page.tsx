@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import TableOfContents from "@/components/TableOfContents";
+import QnA from "@/components/QnA";
 import { getPostBySlug, getSortedPostsData } from "@/lib/posts";
+import { extractQnA, removeQnASection } from "@/lib/qna-utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -51,10 +53,14 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
+  // Extract Q&A and remove from main content
+  const qnaItems = extractQnA(post.content);
+  const contentWithoutQnA = removeQnASection(post.content);
+
   return (
     <>
       <Header />
-      <TableOfContents content={post.content} />
+      <TableOfContents content={contentWithoutQnA} />
       <main>
         <article className="prose prose-lg max-w-none">
           <h1
@@ -82,8 +88,15 @@ export default async function PostPage({ params }: PostPageProps) {
                 }
               }}
             >
-              {post.content}
+              {contentWithoutQnA}
             </ReactMarkdown>
+
+            {qnaItems.length > 0 && (
+              <>
+                <h2 id="자주-묻는-질문" className="mt-12 mb-6">자주 묻는 질문</h2>
+                <QnA items={qnaItems} />
+              </>
+            )}
           </div>
         </article>
       </main>
