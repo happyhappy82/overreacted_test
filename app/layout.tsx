@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "에이정, 가장 쉬운 AI교육",
   description: "AI교육,AI활용법,AI트렌드 주제로 운영하고 있습니다. AI는 선택이 아닌 필수, 에이정과 함께 하세요!",
-  metadataBase: new URL("https://overreacted-test.vercel.app"),
+  metadataBase: new URL("https://blog.aijeong.com"),
   openGraph: {
     title: "에이정, 가장 쉬운 AI교육",
     description: "AI교육,AI활용법,AI트렌드 주제로 운영하고 있습니다. AI는 선택이 아닌 필수, 에이정과 함께 하세요!",
