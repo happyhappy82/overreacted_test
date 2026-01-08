@@ -47,8 +47,13 @@ async function submitToGoogleIndex(url) {
 async function main() {
   console.log('🔍 Google Search Console 인덱싱 시작\n');
 
+  // 메인 페이지 먼저 색인
+  console.log('--- 메인 페이지 ---');
+  await submitToGoogleIndex(SITE_URL);
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
   if (!PUBLISHED_SLUG) {
-    console.log('ℹ️ PUBLISHED_SLUG가 없음. 인덱싱할 URL 없음.');
+    console.log('\nℹ️ PUBLISHED_SLUG가 없음. 메인 페이지만 인덱싱 완료.');
     return;
   }
 
@@ -56,11 +61,11 @@ async function main() {
   const slugs = PUBLISHED_SLUG.split(',').filter(s => s.trim());
 
   if (slugs.length === 0) {
-    console.log('ℹ️ 발행된 글이 없음. 인덱싱 스킵.');
+    console.log('\nℹ️ 발행된 글이 없음. 메인 페이지만 인덱싱 완료.');
     return;
   }
 
-  console.log(`📄 인덱싱할 글: ${slugs.length}개\n`);
+  console.log(`\n📄 인덱싱할 글: ${slugs.length}개\n`);
 
   for (const slug of slugs) {
     const url = `${SITE_URL}/${slug.trim()}`;
