@@ -28,8 +28,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "에이정 공식 블로그",
+    "alternateName": "에이정 블로그",
+    "url": "https://blog.aijeong.com",
+  };
+
   return (
     <html lang="ko">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+      </head>
       <body className="mx-auto max-w-2xl bg-white px-5 py-12 text-black">
         {children}
       </body>
