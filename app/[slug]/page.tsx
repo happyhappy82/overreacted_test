@@ -39,9 +39,25 @@ export async function generateMetadata({ params }: PostPageProps) {
     };
   }
 
+  const url = `https://blog.aijeong.com/${slug}`;
+
   return {
     title: `${post.title} — 에이정`,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: url,
+      siteName: "에이정 공식 블로그",
+      locale: "ko_KR",
+      type: "article",
+      publishedTime: post.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+    },
   };
 }
 
