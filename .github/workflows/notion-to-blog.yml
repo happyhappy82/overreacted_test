@@ -98,8 +98,8 @@ jobs:
             POST_TITLE="New blog post from Notion"
           fi
 
-          git commit -m "$(cat <<EOF
-Add blog post: $POST_TITLE
+          git commit -m "$(cat <<'COMMIT_MSG'
+Add blog post: '"$POST_TITLE"'
 
 Automated conversion from Notion export:
 - Convert Notion ZIP to markdown blog post
@@ -109,7 +109,7 @@ Automated conversion from Notion export:
 
 🤖 Automated via GitHub Actions
 Co-Authored-By: GitHub Actions Bot <github-actions[bot]@users.noreply.github.com>
-EOF
+COMMIT_MSG
 )"
 
           git push origin main
