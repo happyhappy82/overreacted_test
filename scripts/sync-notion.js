@@ -256,8 +256,12 @@ async function convertPageToMarkdown(page) {
   // Excerpt 생성 (없으면 첫 문단에서 추출)
   let excerpt = excerptProp;
   if (!excerpt) {
-    const firstParagraph = markdown.split('\n\n')[0];
-    excerpt = firstParagraph.slice(0, 160).trim() + (firstParagraph.length > 160 ? '...' : '');
+    // 빈 줄이 아닌 첫 번째 문단 찾기
+    const paragraphs = markdown.split('\n\n').filter(p => p.trim() && !p.startsWith('#'));
+    const firstParagraph = paragraphs[0] || '';
+    // 마크다운 문법 제거 (볼드, 링크 등)
+    const cleanText = firstParagraph.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim();
+    excerpt = cleanText.slice(0, 160) + (cleanText.length > 160 ? '...' : '');
   }
 
   // Frontmatter 생성
