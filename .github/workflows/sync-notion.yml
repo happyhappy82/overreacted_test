@@ -38,6 +38,8 @@ jobs:
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          SYNC_ACTION: ${{ github.event.client_payload.action }}
+          SYNC_PAGE_ID: ${{ github.event.client_payload.page_id }}
         run: node scripts/sync-notion.js
 
       - name: Check for changes
@@ -60,8 +62,8 @@ jobs:
       - name: Commit and push changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          git add content/posts/*.md
-          git add public/notion-images/*.webp
+          git add -A content/posts/
+          git add -A public/notion-images/
 
           git commit -m "Sync blog posts from Notion"
 

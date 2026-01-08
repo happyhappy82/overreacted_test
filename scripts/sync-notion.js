@@ -290,6 +290,45 @@ async function convertPageToMarkdown(page) {
 // 메인 동기화 로직
 // ===========================
 
+// 특정 페이지 업데이트
+async function updatePage(pageId) {
+  console.log(`📝 Updating page: ${pageId}\n`);
+
+  const page = await notion.pages.retrieve({ page_id: pageId });
+  const result = await convertPageToMarkdown(page);
+
+  if (result) {
+    const outputDir = path.join(__dirname, '..', 'content', 'posts');
+    const filePath = path.join(outputDir, `${result.slug}.md`);
+    fs.writeFileSync(filePath, result.content, 'utf8');
+    console.log(`✅ Updated: content/posts/${result.slug}.md`);
+    return result;
+  }
+  return null;
+}
+
+// 특정 페이지 삭제
+async function deletePage(pageId) {
+  console.log(`🗑️ Deleting page: ${pageId}\n`);
+
+  const page = await notion.pages.retrieve({ page_id: pageId });
+  const properties = page.properties;
+  const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
+  const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+
+  const outputDir = path.join(__dirname, '..', 'content', 'posts');
+  const filePath = path.join(outputDir, `${slug}.md`);
+
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+    console.log(`✅ Deleted: content/posts/${slug}.md`);
+    return { slug, title };
+  } else {
+    console.log(`⚠️ File not found: content/posts/${slug}.md`);
+    return null;
+  }
+}
+
 async function syncNotion() {
   console.log('🔄 Starting Notion sync...\n');
 
@@ -303,7 +342,27 @@ async function syncNotion() {
     process.exit(1);
   }
 
+  // 웹훅에서 전달받은 action과 page_id
+  const action = process.env.SYNC_ACTION || 'sync';
+  const pageId = process.env.SYNC_PAGE_ID;
+
+  console.log(`Action: ${action}`);
+  if (pageId) console.log(`Page ID: ${pageId}`);
+  console.log('');
+
   try {
+    // action별 처리
+    if (action === 'update' && pageId) {
+      await updatePage(pageId);
+      return;
+    }
+
+    if (action === 'delete' && pageId) {
+      await deletePage(pageId);
+      return;
+    }
+
+    // 기본 동작: 새 글 동기화 (create 또는 sync)
     // 현재 시간 (ISO 형식)
     const now = new Date().toISOString();
     console.log(`Current time: ${now}\n`);
