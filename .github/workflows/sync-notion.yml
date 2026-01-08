@@ -71,11 +71,45 @@ jobs:
           git pull --rebase origin main
           git push origin main
 
+      - name: Check for published slug
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: check_slug
+        run: |
+          if [ -f ".published-slug" ]; then
+            SLUG=$(cat .published-slug)
+            echo "published_slug=$SLUG" >> $GITHUB_OUTPUT
+            echo "has_slug=true" >> $GITHUB_OUTPUT
+            echo "📌 발행된 slug: $SLUG"
+          else
+            echo "has_slug=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ 발행된 slug 없음"
+          fi
+
+      - name: Wait for Vercel deployment
+        if: steps.check_slug.outputs.has_slug == 'true'
+        run: |
+          echo "⏳ Vercel 배포 대기 중 (3분)..."
+          sleep 180
+          echo "✅ 대기 완료"
+
+      - name: Submit to Google Search Console
+        if: steps.check_slug.outputs.has_slug == 'true'
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          PUBLISHED_SLUG: ${{ steps.check_slug.outputs.published_slug }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "🔍 Google Search Console에 URL 제출 중..."
+          node scripts/google-indexing.js
+
       - name: Report completion
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          echo "✅ Notion sync completed and deployed!"
-          echo "Vercel will automatically deploy the changes in 1-2 minutes."
+          echo "✅ Notion sync completed!"
+          if [ -f ".published-slug" ]; then
+            echo "📌 발행된 글: $(cat .published-slug)"
+            echo "🔍 Google 인덱싱 요청 완료"
+          fi
 
       - name: No changes
         if: steps.check_changes.outputs.has_changes == 'false'

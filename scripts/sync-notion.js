@@ -441,7 +441,13 @@ async function syncNotion() {
       // Status에 따라 처리
       if (status === 'Published') {
         console.log('➡️ 발행/수정 처리');
-        await updatePage(pageId);
+        const result = await updatePage(pageId);
+        // 발행된 slug 저장 (인덱싱용)
+        if (result && result.slug) {
+          const slugFile = path.join(__dirname, '..', '.published-slug');
+          fs.writeFileSync(slugFile, result.slug, 'utf8');
+          console.log(`\n📌 인덱싱용 slug 저장: ${result.slug}`);
+        }
       } else if (status === 'Deleted' || status === 'deleted') {
         console.log('➡️ 삭제 처리');
         await deletePage(pageId);
@@ -520,6 +526,11 @@ async function syncNotion() {
 
           console.log(`✅ Created: content/posts/${result.slug}.md`);
           console.log(`   Images: ${result.imageCount}`);
+
+          // 발행된 slug 저장 (인덱싱용)
+          const slugFile = path.join(__dirname, '..', '.published-slug');
+          fs.writeFileSync(slugFile, result.slug, 'utf8');
+          console.log(`📌 인덱싱용 slug 저장: ${result.slug}`);
 
           publishedOne = true;
           break; // 하나만 발행하고 종료
