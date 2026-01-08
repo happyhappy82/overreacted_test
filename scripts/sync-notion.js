@@ -494,8 +494,9 @@ async function syncNotion() {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    // 각 페이지 변환 (이미 존재하는 파일은 스킵)
-    const results = [];
+    // 예약발행: 한 번에 하나씩만 발행 (6시간마다 1개씩)
+    let publishedOne = false;
+
     for (const page of response.results) {
       try {
         // 먼저 slug 계산해서 파일 존재 여부 확인
@@ -520,7 +521,8 @@ async function syncNotion() {
           console.log(`✅ Created: content/posts/${result.slug}.md`);
           console.log(`   Images: ${result.imageCount}`);
 
-          results.push(result);
+          publishedOne = true;
+          break; // 하나만 발행하고 종료
         }
       } catch (error) {
         console.error(`❌ Failed to convert page:`, error.message);
@@ -528,14 +530,10 @@ async function syncNotion() {
       }
     }
 
-    console.log(`\n✅ Sync completed! ${results.length} post(s) created/updated`);
-
-    // 결과 요약 출력
-    if (results.length > 0) {
-      console.log('\n📊 Summary:');
-      results.forEach(r => {
-        console.log(`  - ${r.title} (${r.slug})`);
-      });
+    if (publishedOne) {
+      console.log(`\n✅ 예약발행 완료! (6시간마다 1개씩 발행)`);
+    } else {
+      console.log(`\n✅ 발행할 새 글이 없습니다.`);
     }
 
   } catch (error) {
