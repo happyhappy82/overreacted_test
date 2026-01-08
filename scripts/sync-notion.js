@@ -123,8 +123,32 @@ async function blockToMarkdown(block, slug, imageCounter) {
         return `![${caption}](${imageResult.path})\n\n`;
 
       case 'table':
-        // 테이블은 children blocks를 가져와야 함
-        return ''; // 별도 처리 필요
+        // 테이블 행(children) 가져오기
+        const tableRows = await notion.blocks.children.list({
+          block_id: block.id,
+        });
+
+        if (tableRows.results.length === 0) return '';
+
+        let tableMarkdown = '';
+        const hasColumnHeader = block.table.has_column_header;
+
+        tableRows.results.forEach((row, rowIndex) => {
+          if (row.type !== 'table_row') return;
+
+          const cells = row.table_row.cells.map(cell =>
+            richTextToMarkdown(cell).replace(/\|/g, '\\|') // 셀 내 | 이스케이프
+          );
+
+          tableMarkdown += '| ' + cells.join(' | ') + ' |\n';
+
+          // 첫 번째 행 후에 구분선 추가 (헤더가 있든 없든 마크다운 테이블에는 필요)
+          if (rowIndex === 0) {
+            tableMarkdown += '| ' + cells.map(() => '---').join(' | ') + ' |\n';
+          }
+        });
+
+        return tableMarkdown + '\n';
 
       case 'callout':
         const emoji = block.callout.icon?.emoji || '💡';
