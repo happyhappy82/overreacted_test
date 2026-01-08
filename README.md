@@ -1,6 +1,6 @@
-# Overreacted Clone
+# 에이정 브랜드 블로그
 
-A high-performance blog inspired by Dan Abramov's [overreacted.io](https://overreacted.io), built with Next.js 15 and React Server Components.
+Next.js 15와 React Server Components로 구축된 고성능 블로그입니다.
 
 ## Features
 
