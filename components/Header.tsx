@@ -7,18 +7,8 @@ export default function Header() {
         className="inline-block text-2xl font-black"
         href="/"
       >
-        overreacted
+        에이정
       </Link>
-      <span className="relative top-[4px] italic">
-        by{" "}
-        <a
-          target="_blank"
-          href="https://danabra.mov"
-          rel="noopener noreferrer"
-        >
-          Dan Abramov
-        </a>
-      </span>
     </header>
   );
 }

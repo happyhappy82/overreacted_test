@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   }
 
   return {
-    title: `${post.title} — overreacted`,
+    title: `${post.title} — 에이정`,
     description: post.excerpt,
   };
 }
