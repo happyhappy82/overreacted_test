@@ -223,7 +223,8 @@ async function convertPageToMarkdown(page) {
   // Properties 추출
   const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
   const status = properties.Status?.status?.name || 'Draft';
-  const dateValue = properties.Date?.date?.start || new Date().toISOString().split('T')[0];
+  const dateRaw = properties.Date?.date?.start || new Date().toISOString();
+  const dateValue = dateRaw.split('T')[0]; // 날짜만 추출 (시간 제거)
   const tags = properties.Tags?.multi_select?.map(tag => tag.name) || [];
   const excerptProp = properties.Excerpt?.rich_text?.[0]?.plain_text || '';
 

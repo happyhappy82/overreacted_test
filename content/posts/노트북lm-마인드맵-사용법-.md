@@ -1,6 +1,6 @@
 ---
 title: '노트북LM 마인드맵 사용법 '
-date: '2026-01-07T09:00:00.000+09:00'
+date: '2026-01-07'
 excerpt: ''
 notion_id: 2e2753eb-c013-8171-8fd1-f0525e5e969d
 lightColor: '#0066cc'
