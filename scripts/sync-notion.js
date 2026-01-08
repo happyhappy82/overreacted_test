@@ -400,12 +400,25 @@ async function syncNotion() {
         process.exit(1);
       }
 
-      // action에 따라 처리 (기본값: 발행/수정)
-      if (action === 'delete') {
+      // Notion에서 페이지 조회해서 Status 확인
+      console.log(`📄 Fetching page from Notion...`);
+      const page = await notion.pages.retrieve({ page_id: pageId });
+      const status = page.properties.Status?.status?.name;
+      const title = page.properties.Title?.title?.[0]?.plain_text || 'Untitled';
+
+      console.log(`Title: ${title}`);
+      console.log(`Status: ${status}\n`);
+
+      // Status에 따라 처리
+      if (status === 'Published') {
+        console.log('➡️ 발행/수정 처리');
+        await updatePage(pageId);
+      } else if (status === 'Deleted' || status === 'deleted') {
+        console.log('➡️ 삭제 처리');
         await deletePage(pageId);
       } else {
-        // create, update, 또는 action 없음 → 발행/수정
-        await updatePage(pageId);
+        console.log(`⚠️ 처리하지 않음 (Status: ${status})`);
+        console.log('Published 또는 Deleted 상태만 처리됩니다.');
       }
       return;
     }
