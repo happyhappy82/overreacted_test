@@ -385,8 +385,10 @@ async function syncNotion() {
   // 웹훅에서 전달받은 action과 page_id
   const action = process.env.SYNC_ACTION || 'sync';
   const pageId = process.env.SYNC_PAGE_ID;
+  const triggerType = process.env.TRIGGER_TYPE || 'schedule';
 
   console.log(`Action: ${action}`);
+  console.log(`Trigger: ${triggerType}`);
   if (pageId) console.log(`Page ID: ${pageId}`);
   console.log('');
 
@@ -402,15 +404,26 @@ async function syncNotion() {
       return;
     }
 
-    // 기본 동작: 새 글 동기화 (create 또는 sync)
-    // 현재 시간 (ISO 형식)
-    const now = new Date().toISOString();
-    console.log(`Current time: ${now}\n`);
+    // 기본 동작: 새 글 동기화
+    // 웹훅(repository_dispatch)이면 즉시 발행 (시간 체크 X)
+    // 스케줄이면 예약 발행 (시간 체크 O)
+    const isImmediate = triggerType === 'repository_dispatch';
 
-    // Published 상태이면서 예약 시간이 현재 이전인 페이지만 가져오기
-    const response = await notion.databases.query({
-      database_id: DATABASE_ID,
-      filter: {
+    let filter;
+    if (isImmediate) {
+      // 즉시 발행: Published만 확인
+      console.log('Mode: 즉시 발행 (시간 체크 없음)\n');
+      filter = {
+        property: 'Status',
+        status: {
+          equals: 'Published'
+        }
+      };
+    } else {
+      // 예약 발행: Published + 시간 체크
+      const now = new Date().toISOString();
+      console.log(`Mode: 예약 발행 (Date <= ${now})\n`);
+      filter = {
         and: [
           {
             property: 'Status',
@@ -425,7 +438,12 @@ async function syncNotion() {
             }
           }
         ]
-      },
+      };
+    }
+
+    const response = await notion.databases.query({
+      database_id: DATABASE_ID,
+      filter: filter,
       sorts: [
         {
           property: 'Date',
@@ -434,7 +452,7 @@ async function syncNotion() {
       ]
     });
 
-    console.log(`Found ${response.results.length} published page(s) with past date\n`);
+    console.log(`Found ${response.results.length} published page(s)\n`);
 
     if (response.results.length === 0) {
       console.log('✅ No new posts to publish');
