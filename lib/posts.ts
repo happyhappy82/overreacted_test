@@ -58,13 +58,15 @@ export function getSortedPostsData(): Post[] {
 
 export function getPostBySlug(slug: string): Post | null {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.md`);
+    // URL 인코딩된 한글 slug 디코딩
+    const decodedSlug = decodeURIComponent(slug);
+    const fullPath = path.join(postsDirectory, `${decodedSlug}.md`);
     let fileContents;
 
     if (fs.existsSync(fullPath)) {
       fileContents = fs.readFileSync(fullPath, "utf8");
     } else {
-      const mdxPath = path.join(postsDirectory, `${slug}.mdx`);
+      const mdxPath = path.join(postsDirectory, `${decodedSlug}.mdx`);
       if (fs.existsSync(mdxPath)) {
         fileContents = fs.readFileSync(mdxPath, "utf8");
       } else {
@@ -80,8 +82,8 @@ export function getPostBySlug(slug: string): Post | null {
     const stats = readingTime(contentWithoutTitle);
 
     return {
-      slug,
-      title: data.title || slug,
+      slug: decodedSlug,
+      title: data.title || decodedSlug,
       date: data.date || "",
       excerpt: data.excerpt || "",
       content: contentWithoutTitle,
