@@ -304,14 +304,28 @@ async function syncNotion() {
   }
 
   try {
-    // Published 상태의 페이지만 가져오기
+    // 현재 시간 (ISO 형식)
+    const now = new Date().toISOString();
+    console.log(`Current time: ${now}\n`);
+
+    // Published 상태이면서 예약 시간이 현재 이전인 페이지만 가져오기
     const response = await notion.databases.query({
       database_id: DATABASE_ID,
       filter: {
-        property: 'Status',
-        status: {
-          equals: 'Published'
-        }
+        and: [
+          {
+            property: 'Status',
+            status: {
+              equals: 'Published'
+            }
+          },
+          {
+            property: 'Date',
+            date: {
+              on_or_before: now
+            }
+          }
+        ]
       },
       sorts: [
         {
@@ -321,7 +335,7 @@ async function syncNotion() {
       ]
     });
 
-    console.log(`Found ${response.results.length} published page(s)\n`);
+    console.log(`Found ${response.results.length} published page(s) with past date\n`);
 
     if (response.results.length === 0) {
       console.log('✅ No new posts to publish');
@@ -333,16 +347,28 @@ async function syncNotion() {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    // 각 페이지 변환
+    // 각 페이지 변환 (이미 존재하는 파일은 스킵)
     const results = [];
     for (const page of response.results) {
       try {
+        // 먼저 slug 계산해서 파일 존재 여부 확인
+        const properties = page.properties;
+        const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
+        const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+        const filePath = path.join(outputDir, `${slug}.md`);
+
+        // 이미 파일이 존재하면 스킵
+        if (fs.existsSync(filePath)) {
+          console.log(`⏭️ Skipping "${title}" (already exists: ${slug}.md)`);
+          continue;
+        }
+
         const result = await convertPageToMarkdown(page);
 
         if (result) {
           // 파일 저장
-          const filePath = path.join(outputDir, `${result.slug}.md`);
-          fs.writeFileSync(filePath, result.content, 'utf8');
+          const finalPath = path.join(outputDir, `${result.slug}.md`);
+          fs.writeFileSync(finalPath, result.content, 'utf8');
 
           console.log(`✅ Created: content/posts/${result.slug}.md`);
           console.log(`   Images: ${result.imageCount}`);
