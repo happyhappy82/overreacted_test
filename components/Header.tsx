@@ -4,9 +4,11 @@ import Image from "next/image";
 export default function Header() {
   return (
     <header className="mb-14 flex flex-row place-content-between">
-      <Link
+      <a
+        href="https://aijeong.com"
         className="inline-block"
-        href="/"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <Image
           src="/logo.png"
@@ -14,9 +16,9 @@ export default function Header() {
           width={200}
           height={50}
           priority
-          className="h-auto w-[180px]"
+          className="h-auto w-[140px]"
         />
-      </Link>
+      </a>
     </header>
   );
 }
