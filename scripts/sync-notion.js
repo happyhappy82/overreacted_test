@@ -220,13 +220,13 @@ async function convertPageToMarkdown(page) {
   const pageId = page.id;
   const properties = page.properties;
 
-  // Properties 추출
-  const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
+  // Properties 추출 (rich_text는 여러 조각으로 나뉠 수 있으므로 전체 합침)
+  const title = properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
   const status = properties.Status?.status?.name || 'Draft';
   const dateRaw = properties.Date?.date?.start || new Date().toISOString();
   const dateValue = dateRaw.split('T')[0]; // 날짜만 추출 (시간 제거)
   const tags = properties.Tags?.multi_select?.map(tag => tag.name) || [];
-  const excerptProp = properties.Excerpt?.rich_text?.[0]?.plain_text || '';
+  const excerptProp = properties.Excerpt?.rich_text?.map(t => t.plain_text).join('') || '';
 
   // Published 상태가 아니면 스킵
   if (status !== 'Published') {
@@ -238,8 +238,8 @@ async function convertPageToMarkdown(page) {
   console.log(`Date: ${dateValue}`);
   console.log(`Tags: ${tags.join(', ')}`);
 
-  // Slug 생성
-  const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+  // Slug 생성 (rich_text는 여러 조각으로 나뉠 수 있으므로 전체 합침)
+  const slug = properties.Slug?.rich_text?.map(t => t.plain_text).join('') || generateSlug(title);
 
   // 페이지 블록 가져오기
   const blocks = await getPageBlocks(pageId);
@@ -353,8 +353,8 @@ async function deletePage(pageId) {
   try {
     const page = await notion.pages.retrieve({ page_id: pageId });
     const properties = page.properties;
-    const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
-    const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+    const title = properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
+    const slug = properties.Slug?.rich_text?.map(t => t.plain_text).join('') || generateSlug(title);
     const filePath = path.join(outputDir, `${slug}.md`);
 
     if (fs.existsSync(filePath)) {
@@ -405,7 +405,7 @@ async function syncNotion() {
       console.log(`📄 Fetching page from Notion...`);
       const page = await notion.pages.retrieve({ page_id: pageId });
       const status = page.properties.Status?.status?.name;
-      const title = page.properties.Title?.title?.[0]?.plain_text || 'Untitled';
+      const title = page.properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
 
       console.log(`Title: ${title}`);
       console.log(`Status: ${status}\n`);
@@ -472,8 +472,8 @@ async function syncNotion() {
       try {
         // 먼저 slug 계산해서 파일 존재 여부 확인
         const properties = page.properties;
-        const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
-        const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+        const title = properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
+        const slug = properties.Slug?.rich_text?.map(t => t.plain_text).join('') || generateSlug(title);
         const filePath = path.join(outputDir, `${slug}.md`);
 
         // 이미 파일이 존재하면 스킵
