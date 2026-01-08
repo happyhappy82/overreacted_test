@@ -264,6 +264,7 @@ async function convertPageToMarkdown(page) {
     title,
     date: dateValue,
     excerpt,
+    notion_id: pageId,
     lightColor: '#0066cc',
     darkColor: '#0052a3',
   };
@@ -290,15 +291,31 @@ async function convertPageToMarkdown(page) {
 // 메인 동기화 로직
 // ===========================
 
-// 특정 페이지 업데이트
+// 특정 페이지 업데이트 (notion_id로 기존 파일 찾아서 교체)
 async function updatePage(pageId) {
   console.log(`📝 Updating page: ${pageId}\n`);
 
+  const outputDir = path.join(__dirname, '..', 'content', 'posts');
+
+  // 먼저 기존 파일 찾아서 삭제 (제목이 바뀌었을 수 있으므로)
+  const files = fs.readdirSync(outputDir).filter(f => f.endsWith('.md'));
+  for (const file of files) {
+    const filePath = path.join(outputDir, file);
+    const content = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(content);
+
+    if (data.notion_id === pageId) {
+      fs.unlinkSync(filePath);
+      console.log(`🗑️ Removed old file: content/posts/${file}`);
+      break;
+    }
+  }
+
+  // 새로 변환해서 저장
   const page = await notion.pages.retrieve({ page_id: pageId });
   const result = await convertPageToMarkdown(page);
 
   if (result) {
-    const outputDir = path.join(__dirname, '..', 'content', 'posts');
     const filePath = path.join(outputDir, `${result.slug}.md`);
     fs.writeFileSync(filePath, result.content, 'utf8');
     console.log(`✅ Updated: content/posts/${result.slug}.md`);
@@ -307,26 +324,49 @@ async function updatePage(pageId) {
   return null;
 }
 
-// 특정 페이지 삭제
+// 특정 페이지 삭제 (notion_id로 파일 찾기)
 async function deletePage(pageId) {
   console.log(`🗑️ Deleting page: ${pageId}\n`);
 
-  const page = await notion.pages.retrieve({ page_id: pageId });
-  const properties = page.properties;
-  const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
-  const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
-
   const outputDir = path.join(__dirname, '..', 'content', 'posts');
-  const filePath = path.join(outputDir, `${slug}.md`);
 
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
-    console.log(`✅ Deleted: content/posts/${slug}.md`);
-    return { slug, title };
-  } else {
-    console.log(`⚠️ File not found: content/posts/${slug}.md`);
-    return null;
+  // 모든 md 파일에서 notion_id가 일치하는 파일 찾기
+  const files = fs.readdirSync(outputDir).filter(f => f.endsWith('.md'));
+
+  for (const file of files) {
+    const filePath = path.join(outputDir, file);
+    const content = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(content);
+
+    if (data.notion_id === pageId) {
+      fs.unlinkSync(filePath);
+      console.log(`✅ Deleted: content/posts/${file}`);
+      return { slug: file.replace('.md', ''), title: data.title };
+    }
   }
+
+  // notion_id로 못 찾으면 slug로 시도 (fallback)
+  console.log(`⚠️ No file found with notion_id: ${pageId}`);
+  console.log(`Trying to find by slug from Notion...`);
+
+  try {
+    const page = await notion.pages.retrieve({ page_id: pageId });
+    const properties = page.properties;
+    const title = properties.Title?.title?.[0]?.plain_text || 'Untitled';
+    const slug = properties.Slug?.rich_text?.[0]?.plain_text || generateSlug(title);
+    const filePath = path.join(outputDir, `${slug}.md`);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log(`✅ Deleted (by slug): content/posts/${slug}.md`);
+      return { slug, title };
+    }
+  } catch (error) {
+    console.log(`Could not retrieve page from Notion: ${error.message}`);
+  }
+
+  console.log(`❌ File not found for page_id: ${pageId}`);
+  return null;
 }
 
 async function syncNotion() {
