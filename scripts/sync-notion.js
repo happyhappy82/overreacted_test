@@ -393,37 +393,30 @@ async function syncNotion() {
   console.log('');
 
   try {
-    // action별 처리
-    if (action === 'update' && pageId) {
-      await updatePage(pageId);
+    // 웹훅(repository_dispatch)이면 무조건 page_id 기반으로 처리
+    if (triggerType === 'repository_dispatch') {
+      if (!pageId) {
+        console.error('❌ 웹훅 호출 시 page_id가 필요합니다.');
+        process.exit(1);
+      }
+
+      // action에 따라 처리 (기본값: 발행/수정)
+      if (action === 'delete') {
+        await deletePage(pageId);
+      } else {
+        // create, update, 또는 action 없음 → 발행/수정
+        await updatePage(pageId);
+      }
       return;
     }
 
-    if (action === 'delete' && pageId) {
-      await deletePage(pageId);
-      return;
-    }
+    // 스케줄(6시간마다): 예약 발행 (시간 체크 O)
+    const now = new Date().toISOString();
+    console.log(`Mode: 예약 발행 (Date <= ${now})\n`);
 
-    // 기본 동작: 새 글 동기화
-    // 웹훅(repository_dispatch)이면 즉시 발행 (시간 체크 X)
-    // 스케줄이면 예약 발행 (시간 체크 O)
-    const isImmediate = triggerType === 'repository_dispatch';
-
-    let filter;
-    if (isImmediate) {
-      // 즉시 발행: Published만 확인
-      console.log('Mode: 즉시 발행 (시간 체크 없음)\n');
-      filter = {
-        property: 'Status',
-        status: {
-          equals: 'Published'
-        }
-      };
-    } else {
-      // 예약 발행: Published + 시간 체크
-      const now = new Date().toISOString();
-      console.log(`Mode: 예약 발행 (Date <= ${now})\n`);
-      filter = {
+    const response = await notion.databases.query({
+      database_id: DATABASE_ID,
+      filter: {
         and: [
           {
             property: 'Status',
@@ -438,12 +431,7 @@ async function syncNotion() {
             }
           }
         ]
-      };
-    }
-
-    const response = await notion.databases.query({
-      database_id: DATABASE_ID,
-      filter: filter,
+      },
       sorts: [
         {
           property: 'Date',
