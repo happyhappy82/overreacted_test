@@ -98,19 +98,7 @@ jobs:
             POST_TITLE="New blog post from Notion"
           fi
 
-          git commit -m "$(cat <<'COMMIT_MSG'
-Add blog post: '"$POST_TITLE"'
-
-Automated conversion from Notion export:
-- Convert Notion ZIP to markdown blog post
-- Optimize images to WebP format (1200px, quality 90)
-- Extract Q&A sections to accordion components
-- Generate table of contents from headings
-
-🤖 Automated via GitHub Actions
-Co-Authored-By: GitHub Actions Bot <github-actions[bot]@users.noreply.github.com>
-COMMIT_MSG
-)"
+          git commit -m "Add blog post: $POST_TITLE"
 
           git push origin main
           echo "has_changes=true" >> $GITHUB_OUTPUT
