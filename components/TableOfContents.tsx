@@ -77,11 +77,11 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
         {/* 플로팅 버튼 */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-black text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 transition-all"
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-black/70 backdrop-blur-sm text-white rounded-full shadow-lg flex items-center justify-center hover:bg-black/80 transition-all"
           aria-label="목차"
         >
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
