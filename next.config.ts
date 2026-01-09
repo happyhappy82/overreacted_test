@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ["react-icons", "react-markdown"],
+    optimizeCss: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
