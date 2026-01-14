@@ -56,6 +56,12 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google AdSense 자동광고 */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2923981352664263"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="mx-auto max-w-2xl bg-white px-5 py-12 text-black">
         {children}
