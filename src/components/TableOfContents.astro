@@ -1,0 +1,148 @@
+---
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+if (headings.length === 0) {
+  return null;
+}
+---
+
+<!-- Mobile floating button -->
+<div class="xl:hidden">
+  <button
+    id="toc-toggle"
+    class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-black/70 backdrop-blur-sm text-white rounded-full shadow-lg flex items-center justify-center hover:bg-black/80 transition-all"
+    aria-label="목차"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Mobile modal -->
+  <div id="toc-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+  <nav id="toc-modal" class="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl max-h-[70vh] overflow-y-auto translate-y-full transition-transform duration-300">
+    <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+      <h3 class="text-lg font-semibold text-gray-900">목차</h3>
+      <button id="toc-close" class="text-gray-400 hover:text-gray-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <ul class="px-6 py-4 space-y-3">
+      {headings.map((heading) => (
+        <li style={heading.level === 3 ? "padding-left: 1rem" : ""}>
+          <a
+            href={`#${heading.id}`}
+            class="toc-link block py-2 transition-colors text-gray-600 hover:text-black"
+            data-id={heading.id}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<!-- Desktop sidebar -->
+<nav class="hidden xl:block fixed right-8 top-32 w-56">
+  <div class="sticky top-32">
+    <p class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">목차</p>
+    <ul class="space-y-2 text-sm">
+      {headings.map((heading) => (
+        <li style={heading.level === 3 ? "padding-left: 1rem" : ""}>
+          <a
+            href={`#${heading.id}`}
+            class="toc-link block transition-colors text-gray-600 hover:text-black"
+            data-id={heading.id}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // Mobile toggle functionality
+  const toggleBtn = document.getElementById("toc-toggle");
+  const overlay = document.getElementById("toc-overlay");
+  const modal = document.getElementById("toc-modal");
+  const closeBtn = document.getElementById("toc-close");
+
+  function openModal() {
+    overlay?.classList.remove("hidden");
+    modal?.classList.remove("translate-y-full");
+  }
+
+  function closeModal() {
+    overlay?.classList.add("hidden");
+    modal?.classList.add("translate-y-full");
+  }
+
+  toggleBtn?.addEventListener("click", openModal);
+  overlay?.addEventListener("click", closeModal);
+  closeBtn?.addEventListener("click", closeModal);
+
+  // Close modal when clicking TOC link
+  document.querySelectorAll("#toc-modal .toc-link").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = (link as HTMLElement).dataset.id;
+      if (id) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      closeModal();
+    });
+  });
+
+  // Desktop smooth scroll
+  document.querySelectorAll("nav:not(#toc-modal) .toc-link").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = (link as HTMLElement).dataset.id;
+      if (id) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // Intersection Observer for active section
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Remove active from all links
+          document.querySelectorAll(".toc-link").forEach((link) => {
+            link.classList.remove("text-black", "font-medium");
+            link.classList.add("text-gray-600");
+          });
+
+          // Add active to matching links
+          document.querySelectorAll(`.toc-link[data-id="${entry.target.id}"]`).forEach((link) => {
+            link.classList.add("text-black", "font-medium");
+            link.classList.remove("text-gray-600");
+          });
+        }
+      });
+    },
+    { rootMargin: "-20% 0% -35% 0%" }
+  );
+
+  // Observe all headings
+  document.querySelectorAll("h2[id], h3[id]").forEach((heading) => {
+    observer.observe(heading);
+  });
+</script>

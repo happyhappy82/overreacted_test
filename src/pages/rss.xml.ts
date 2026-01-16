@@ -1,6 +1,7 @@
+import type { APIRoute } from "astro";
 import { getSortedPostsData } from "@/lib/posts";
 
-export async function GET() {
+export const GET: APIRoute = () => {
   const posts = getSortedPostsData();
   const baseUrl = "https://blog.aijeong.com";
 
@@ -36,4 +37,4 @@ export async function GET() {
       "Cache-Control": "s-maxage=3600, stale-while-revalidate",
     },
   });
-}
+};

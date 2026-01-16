@@ -1,0 +1,26 @@
+---
+interface QnAItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: QnAItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="space-y-3 my-8">
+  {items.map((item) => (
+    <details class="group border border-gray-200 rounded-lg overflow-hidden">
+      <summary class="cursor-pointer px-5 py-4 bg-white hover:bg-gray-50 transition-colors list-none flex items-start">
+        <span class="mr-3 text-gray-400 group-open:rotate-90 transition-transform duration-200">▶</span>
+        <span class="font-medium text-gray-900 flex-1">{item.question}</span>
+      </summary>
+      <div class="px-5 py-4 bg-gray-50 border-t border-gray-200">
+        <p class="text-gray-700 leading-relaxed">{item.answer}</p>
+      </div>
+    </details>
+  ))}
+</div>

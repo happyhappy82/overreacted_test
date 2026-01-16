@@ -1,0 +1,190 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import QnA from "@/components/QnA.astro";
+import { getSortedPostsData, getPostBySlug } from "@/lib/posts";
+import { extractQnA, removeQnASection } from "@/lib/qna-utils";
+import { marked } from "marked";
+
+export function getStaticPaths() {
+  const posts = getSortedPostsData();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = getPostBySlug(slug as string);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// Extract Q&A and remove from main content
+const qnaItems = extractQnA(post.content);
+const contentWithoutQnA = removeQnASection(post.content);
+
+// Generate ID from text for headings
+function generateId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
+// Extract headings for TOC
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+function extractHeadings(content: string): Heading[] {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const headings: Heading[] = [];
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].replace(/\*\*/g, "");
+    const id = generateId(text);
+    headings.push({ id, text, level });
+  }
+
+  return headings;
+}
+
+const headings = extractHeadings(contentWithoutQnA);
+
+// Custom marked renderer
+const renderer = new marked.Renderer();
+
+renderer.heading = function ({ text, depth }) {
+  const cleanText = text.replace(/\*\*/g, "");
+  const id = generateId(cleanText);
+  return `<h${depth} id="${id}">${text}</h${depth}>`;
+};
+
+renderer.image = function ({ href, text }) {
+  const alt = text || post.title;
+  return `<img src="${href}" alt="${alt}" loading="lazy" class="rounded-lg w-full h-auto" />`;
+};
+
+renderer.table = function ({ header, body }) {
+  return `<div class="overflow-x-auto"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
+};
+
+marked.setOptions({
+  renderer,
+  gfm: true,
+  breaks: false,
+});
+
+const htmlContent = marked.parse(contentWithoutQnA) as string;
+
+const url = `https://blog.aijeong.com/${slug}`;
+const displayDate = post.date.split("T")[0];
+
+// Article Schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  description: post.excerpt,
+  datePublished: post.date,
+  dateModified: post.date,
+  author: {
+    "@type": "Organization",
+    name: "에이정",
+    url: "https://blog.aijeong.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "에이정",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://blog.aijeong.com/logo.png",
+    },
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": url,
+  },
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "홈",
+      item: "https://blog.aijeong.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: post.title,
+      item: url,
+    },
+  ],
+};
+
+// FAQPage Schema (only if Q&A exists)
+const faqSchema =
+  qnaItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: qnaItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      }
+    : undefined;
+---
+
+<Layout
+  title={`${post.title} — 에이정`}
+  description={post.excerpt}
+  canonical={url}
+  ogType="article"
+  publishedTime={post.date}
+  articleSchema={articleSchema}
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
+>
+  <Header />
+  <TableOfContents headings={headings} />
+
+  <main>
+    <article class="prose prose-lg max-w-none">
+      <h1
+        class="text-[48px] font-black leading-tight mb-2"
+        style={`color: ${post.lightColor}`}
+      >
+        {post.title}
+      </h1>
+      <p class="text-[13px] text-gray-700 mb-8">
+        <time datetime={post.date}>{displayDate}</time> · {post.readingTime}
+      </p>
+      <div class="mt-8" set:html={htmlContent} />
+
+      {qnaItems.length > 0 && (
+        <>
+          <h2 id="자주-묻는-질문" class="mt-12 mb-6">자주 묻는 질문</h2>
+          <QnA items={qnaItems} />
+        </>
+      )}
+    </article>
+  </main>
+</Layout>

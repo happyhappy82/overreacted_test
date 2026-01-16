@@ -1,0 +1,37 @@
+---
+// Analytics component - loads GA and AdSense with lazy loading
+---
+
+<script>
+  function loadAnalytics() {
+    // Google Analytics
+    const gaScript = document.createElement("script");
+    gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-9VQ2JT7ZYK";
+    gaScript.async = true;
+    document.head.appendChild(gaScript);
+
+    gaScript.onload = () => {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      function gtag(...args: any[]) {
+        (window as any).dataLayer.push(args);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9VQ2JT7ZYK");
+    };
+
+    // Google AdSense
+    const adsScript = document.createElement("script");
+    adsScript.src =
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2923981352664263";
+    adsScript.async = true;
+    adsScript.crossOrigin = "anonymous";
+    document.head.appendChild(adsScript);
+  }
+
+  // Load after idle or with delay
+  if ("requestIdleCallback" in window) {
+    (window as any).requestIdleCallback(loadAnalytics, { timeout: 3000 });
+  } else {
+    setTimeout(loadAnalytics, 1000);
+  }
+</script>

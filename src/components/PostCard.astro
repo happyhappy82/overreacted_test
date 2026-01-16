@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  excerpt: string;
+  slug: string;
+  lightColor: string;
+}
+
+const { title, date, excerpt, slug, lightColor } = Astro.props;
+const displayDate = date.split("T")[0];
+---
+
+<a class="block py-4" href={`/${slug}`}>
+  <article>
+    <h2
+      class="text-[28px] font-black leading-none mb-2"
+      style={`color: ${lightColor}`}
+    >
+      {title}
+    </h2>
+    <p class="text-[13px] text-gray-700">{displayDate}</p>
+    <p class="mt-1">{excerpt}</p>
+  </article>
+</a>

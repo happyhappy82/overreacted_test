@@ -327,6 +327,7 @@ async function updatePage(pageId) {
   const outputDir = path.join(__dirname, '..', 'content', 'posts');
 
   // 먼저 기존 파일 찾아서 삭제 (제목이 바뀌었을 수 있으므로)
+  let isNewPost = true; // 신규 발행인지 체크
   const files = fs.readdirSync(outputDir).filter(f => f.endsWith('.md'));
   for (const file of files) {
     const filePath = path.join(outputDir, file);
@@ -336,6 +337,7 @@ async function updatePage(pageId) {
     if (data.notion_id === pageId) {
       fs.unlinkSync(filePath);
       console.log(`🗑️ Removed old file: content/posts/${file}`);
+      isNewPost = false; // 기존 파일이 있었으면 수정
       break;
     }
   }
@@ -348,7 +350,7 @@ async function updatePage(pageId) {
     const filePath = path.join(outputDir, `${result.slug}.md`);
     fs.writeFileSync(filePath, result.content, 'utf8');
     console.log(`✅ Updated: content/posts/${result.slug}.md`);
-    return result;
+    return { ...result, isNewPost }; // 신규 여부 반환
   }
   return null;
 }
@@ -442,11 +444,13 @@ async function syncNotion() {
       if (status === 'Published') {
         console.log('➡️ 발행/수정 처리');
         const result = await updatePage(pageId);
-        // 발행된 slug 저장 (인덱싱용)
-        if (result && result.slug) {
+        // 신규 발행일 때만 slug 저장 (인덱싱용)
+        if (result && result.slug && result.isNewPost) {
           const slugFile = path.join(__dirname, '..', '.published-slug');
           fs.writeFileSync(slugFile, result.slug, 'utf8');
-          console.log(`\n📌 인덱싱용 slug 저장: ${result.slug}`);
+          console.log(`\n📌 신규 발행 - 인덱싱용 slug 저장: ${result.slug}`);
+        } else if (result && result.slug && !result.isNewPost) {
+          console.log(`\n⏭️ 기존 글 수정 - 인덱싱 스킵: ${result.slug}`);
         }
       } else if (status === 'Deleted' || status === 'deleted') {
         console.log('➡️ 삭제 처리');
