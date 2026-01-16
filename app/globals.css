@@ -24,14 +24,77 @@ body {
 body {
   color: var(--text);
   background: var(--bg);
-  font-family: 'Nanum Gothic', 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* System fonts first for performance, then Korean-specific fonts */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Malgun Gothic", "Apple SD Gothic Neo", "Nanum Gothic";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.7;
   word-break: keep-all;
+  /* Mobile optimization: minimum 16px font size to prevent zoom on input focus */
+  font-size: 16px;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Mobile touch target optimization: minimum 48px */
+a,
+button,
+input,
+select,
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Links in prose content don't need touch target size */
+.prose a {
+  min-height: auto;
+  min-width: auto;
+}
+
+/* Prevent horizontal scroll */
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Image error fallback styling */
+img[src=""] {
+  display: none;
+}
+
+img:not([src]) {
+  display: none;
+}
+
+/* Table responsive design */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Ensure scrollable tables on mobile */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--lightLink);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--lightLink);
+  color: white;
 }

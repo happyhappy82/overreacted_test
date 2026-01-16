@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://overreacted.io/sitemap.xml
+Sitemap: https://blog.aijeong.com/sitemap.xml
