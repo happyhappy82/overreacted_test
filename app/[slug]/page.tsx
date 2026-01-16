@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import React from "react";
 import Header from "@/components/Header";
 import TableOfContents from "@/components/TableOfContents";
 import QnA from "@/components/QnA";
@@ -7,6 +8,26 @@ import { getPostBySlug, getSortedPostsData } from "@/lib/posts";
 import { extractQnA, removeQnASection } from "@/lib/qna-utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+// React children에서 텍스트만 추출하는 함수
+function extractTextFromChildren(children: React.ReactNode): string {
+  if (typeof children === "string") {
+    return children;
+  }
+  if (typeof children === "number") {
+    return String(children);
+  }
+  if (Array.isArray(children)) {
+    return children.map(extractTextFromChildren).join("");
+  }
+  if (React.isValidElement(children)) {
+    const props = children.props as { children?: React.ReactNode };
+    if (props.children) {
+      return extractTextFromChildren(props.children);
+    }
+  }
+  return "";
+}
 
 function generateId(text: string): string {
   return text
@@ -183,12 +204,12 @@ export default async function PostPage({ params }: PostPageProps) {
               remarkPlugins={[remarkGfm]}
               components={{
                 h2: ({ children }) => {
-                  const text = String(children).replace(/\*\*/g, "");
+                  const text = extractTextFromChildren(children);
                   const id = generateId(text);
                   return <h2 id={id}>{children}</h2>;
                 },
                 h3: ({ children }) => {
-                  const text = String(children).replace(/\*\*/g, "");
+                  const text = extractTextFromChildren(children);
                   const id = generateId(text);
                   return <h3 id={id}>{children}</h3>;
                 },
