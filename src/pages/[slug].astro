@@ -73,8 +73,7 @@ renderer.heading = function (token: any) {
 
 renderer.image = function ({ href, text }) {
   const alt = text || post.title;
-  // Default dimensions for Notion images (typically 1200x800)
-  return `<img src="${href}" alt="${alt}" width="1200" height="800" loading="lazy" class="rounded-lg w-full h-auto" style="aspect-ratio: 3/2;" />`;
+  return `<img src="${href}" alt="${alt}" loading="lazy" class="rounded-lg max-w-full h-auto" />`;
 };
 
 renderer.table = function (token: any) {
