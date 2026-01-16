@@ -74,8 +74,23 @@ renderer.image = function ({ href, text }) {
   return `<img src="${href}" alt="${alt}" width="1200" height="800" loading="lazy" class="rounded-lg w-full h-auto" style="aspect-ratio: 3/2;" />`;
 };
 
-renderer.table = function ({ header, body }) {
-  return `<div class="overflow-x-auto"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
+renderer.table = function (token: any) {
+  let headerHtml = '<tr>';
+  token.header.forEach((cell: any) => {
+    headerHtml += `<th align="${cell.align || ''}">${this.parser.parseInline(cell.tokens)}</th>`;
+  });
+  headerHtml += '</tr>';
+
+  let bodyHtml = '';
+  token.rows.forEach((row: any) => {
+    bodyHtml += '<tr>';
+    row.forEach((cell: any) => {
+      bodyHtml += `<td align="${cell.align || ''}">${this.parser.parseInline(cell.tokens)}</td>`;
+    });
+    bodyHtml += '</tr>';
+  });
+
+  return `<div class="overflow-x-auto"><table><thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody></table></div>`;
 };
 
 marked.setOptions({
