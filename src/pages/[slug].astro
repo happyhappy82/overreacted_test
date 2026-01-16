@@ -62,10 +62,13 @@ const headings = extractHeadings(contentWithoutQnA);
 // Custom marked renderer
 const renderer = new marked.Renderer();
 
-renderer.heading = function ({ text, depth }) {
+renderer.heading = function (token: any) {
+  const text = token.text || "";
+  const depth = token.depth;
   const cleanText = text.replace(/\*\*/g, "");
   const id = generateId(cleanText);
-  return `<h${depth} id="${id}">${text}</h${depth}>`;
+  const content = this.parser.parseInline(token.tokens);
+  return `<h${depth} id="${id}">${content}</h${depth}>`;
 };
 
 renderer.image = function ({ href, text }) {
