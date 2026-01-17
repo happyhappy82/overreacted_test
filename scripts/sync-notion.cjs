@@ -431,17 +431,26 @@ async function syncNotion() {
         process.exit(1);
       }
 
-      // Notion에서 페이지 조회해서 Status 확인
+      // Notion에서 페이지 조회해서 Status, Date 확인
       console.log(`📄 Fetching page from Notion...`);
       const page = await notion.pages.retrieve({ page_id: pageId });
       const status = page.properties.Status?.status?.name;
       const title = page.properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
+      const dateValue = page.properties.Date?.date?.start;
 
       console.log(`Title: ${title}`);
-      console.log(`Status: ${status}\n`);
+      console.log(`Status: ${status}`);
+      console.log(`Date: ${dateValue || '(비어있음)'}\n`);
 
       // Status에 따라 처리
       if (status === 'Published') {
+        // 날짜가 비어있으면 발행 안함
+        if (!dateValue) {
+          console.log('⚠️ 발행 스킵 - Date 필드가 비어있습니다.');
+          console.log('날짜를 입력한 후 다시 시도해주세요.');
+          return;
+        }
+
         console.log('➡️ 발행/수정 처리');
         const result = await updatePage(pageId);
         // 신규 발행일 때만 slug 저장 (인덱싱용)
