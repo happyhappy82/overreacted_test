@@ -154,6 +154,28 @@ async function blockToMarkdown(block, slug, imageCounter) {
         const emoji = block.callout.icon?.emoji || '💡';
         return `${emoji} **` + richTextToMarkdown(block.callout.rich_text) + '**\n\n';
 
+      case 'toggle':
+        // Q&A 형식으로 변환 (토글 제목 = 질문, 토글 내용 = 답변)
+        const toggleTitle = richTextToMarkdown(block.toggle.rich_text);
+
+        // 토글 내부 블록 가져오기
+        let toggleContent = '';
+        if (block.has_children) {
+          const children = await notion.blocks.children.list({
+            block_id: block.id,
+          });
+
+          for (const child of children.results) {
+            if (child.type === 'paragraph') {
+              toggleContent += richTextToMarkdown(child.paragraph.rich_text) + ' ';
+            } else if (child.type === 'bulleted_list_item') {
+              toggleContent += richTextToMarkdown(child.bulleted_list_item.rich_text) + ' ';
+            }
+          }
+        }
+
+        return `**Q. ${toggleTitle}**\n\nA. ${toggleContent.trim()}\n\n`;
+
       default:
         console.log(`Unsupported block type: ${type}`);
         return '';
