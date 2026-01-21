@@ -444,11 +444,9 @@ async function syncNotion() {
 
       // Status에 따라 처리
       if (status === 'Published') {
-        // 날짜가 비어있으면 발행 안함
+        // 웹훅 발행: 날짜가 없으면 오늘 날짜로 자동 설정
         if (!dateValue) {
-          console.log('⚠️ 발행 스킵 - Date 필드가 비어있습니다.');
-          console.log('날짜를 입력한 후 다시 시도해주세요.');
-          return;
+          console.log('ℹ️ Date 필드가 비어있어 오늘 날짜로 자동 설정합니다.');
         }
 
         console.log('➡️ 발행/수정 처리');
