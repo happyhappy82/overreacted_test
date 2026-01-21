@@ -280,8 +280,14 @@ async function convertPageToMarkdown(page) {
   // Excerpt 생성 (없으면 첫 문단에서 추출)
   let excerpt = excerptProp;
   if (!excerpt) {
-    // 빈 줄이 아닌 첫 번째 문단 찾기
-    const paragraphs = markdown.split('\n\n').filter(p => p.trim() && !p.startsWith('#'));
+    // 코드 블록 제거 후 문단 추출
+    const markdownWithoutCode = markdown.replace(/```[\s\S]*?```/g, '');
+    // 빈 줄이 아닌 첫 번째 문단 찾기 (헤딩, 이미지 제외)
+    const paragraphs = markdownWithoutCode.split('\n\n').filter(p =>
+      p.trim() &&
+      !p.startsWith('#') &&
+      !p.startsWith('!')
+    );
     const firstParagraph = paragraphs[0] || '';
     // 마크다운 문법 제거 (볼드, 링크 등)
     const cleanText = firstParagraph.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim();
