@@ -206,3 +206,78 @@ const faqSchema =
     </article>
   </main>
 </Layout>
+
+<style>
+  .code-block-wrapper {
+    position: relative;
+  }
+  .copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #888;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .code-block-wrapper:hover .copy-button {
+    opacity: 1;
+  }
+  .copy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+  .copy-button.copied {
+    color: #22c55e;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const codeBlocks = document.querySelectorAll('pre');
+
+    codeBlocks.forEach((pre) => {
+      // 이미 wrapper가 있으면 스킵
+      if (pre.parentElement?.classList.contains('code-block-wrapper')) return;
+
+      // wrapper div 생성
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      // 복사 버튼 생성
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.textContent = '복사';
+      button.setAttribute('aria-label', '코드 복사');
+
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.textContent || pre.textContent || '';
+
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = '복사됨!';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            button.textContent = '복사';
+            button.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          button.textContent = '실패';
+          setTimeout(() => {
+            button.textContent = '복사';
+          }, 2000);
+        }
+      });
+
+      wrapper.appendChild(button);
+    });
+  });
+</script>
