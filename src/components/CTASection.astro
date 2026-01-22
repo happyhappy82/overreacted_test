@@ -161,6 +161,12 @@
         form?.reset();
         form?.classList.remove('hidden');
         successMessage?.classList.add('hidden');
+        // Reset submit button
+        const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+        if (submitBtn) {
+          submitBtn.textContent = '문의 보내기';
+          submitBtn.disabled = false;
+        }
       }, 300);
     }
 
