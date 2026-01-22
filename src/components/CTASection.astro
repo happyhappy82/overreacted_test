@@ -1,0 +1,211 @@
+---
+// CTA Section with consultation form modal
+---
+
+<section class="cta-section mt-16 mb-8 p-8 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-pink-500/20 border border-indigo-200/50 dark:border-indigo-500/30">
+  <div class="text-center">
+    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+      우리 업장도 이렇게 될 수 있을까?
+    </h3>
+    <p class="text-gray-600 dark:text-gray-300 mb-6">
+      전문가가 직접 분석해 드립니다. 무료 진단 신청하세요.
+    </p>
+    <button
+      id="cta-button"
+      class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+      </svg>
+      내 업장 진단받기
+    </button>
+  </div>
+</section>
+
+<!-- Modal Backdrop -->
+<div id="modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
+  <!-- Modal Content -->
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <div id="modal-content" class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300">
+      <!-- Close Button -->
+      <button id="modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white">무료 업장 진단 신청</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">전문가가 24시간 내 연락드립니다</p>
+      </div>
+
+      <!-- Form -->
+      <form id="consultation-form" class="space-y-4">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            이름 <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="홍길동"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+          />
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            전화번호 <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            placeholder="010-1234-5678"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+          />
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            궁금한 점
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="3"
+            placeholder="업종, 현재 상황, 궁금한 점 등을 자유롭게 적어주세요"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+        >
+          무료 진단 신청하기
+        </button>
+
+        <p class="text-xs text-center text-gray-400 dark:text-gray-500">
+          제출 시 <a href="/privacy" class="underline hover:text-indigo-500">개인정보처리방침</a>에 동의합니다
+        </p>
+      </form>
+
+      <!-- Success Message (hidden by default) -->
+      <div id="success-message" class="hidden text-center py-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
+          <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">신청이 완료되었습니다!</h3>
+        <p class="text-gray-500 dark:text-gray-400">빠른 시일 내에 연락드리겠습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctaButton = document.getElementById('cta-button');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+    const form = document.getElementById('consultation-form') as HTMLFormElement;
+    const successMessage = document.getElementById('success-message');
+
+    function openModal() {
+      modalBackdrop?.classList.remove('hidden');
+      // Trigger animation
+      requestAnimationFrame(() => {
+        modalBackdrop?.classList.add('opacity-100');
+        modalBackdrop?.classList.remove('opacity-0');
+        modalContent?.classList.add('scale-100', 'opacity-100');
+        modalContent?.classList.remove('scale-95', 'opacity-0');
+      });
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalBackdrop?.classList.remove('opacity-100');
+      modalBackdrop?.classList.add('opacity-0');
+      modalContent?.classList.remove('scale-100', 'opacity-100');
+      modalContent?.classList.add('scale-95', 'opacity-0');
+
+      setTimeout(() => {
+        modalBackdrop?.classList.add('hidden');
+        document.body.style.overflow = '';
+        // Reset form and success message
+        form?.reset();
+        form?.classList.remove('hidden');
+        successMessage?.classList.add('hidden');
+      }, 300);
+    }
+
+    // Open modal
+    ctaButton?.addEventListener('click', openModal);
+
+    // Close modal
+    modalClose?.addEventListener('click', closeModal);
+
+    // Close on backdrop click
+    modalBackdrop?.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop || (e.target as HTMLElement).closest('#modal-content') === null) {
+        closeModal();
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modalBackdrop?.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Form submission
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        message: formData.get('message'),
+        page: window.location.href,
+        timestamp: new Date().toISOString()
+      };
+
+      // TODO: Replace with actual webhook URL
+      // For now, log to console and show success
+      console.log('Form submitted:', data);
+
+      // Show success message
+      form?.classList.add('hidden');
+      successMessage?.classList.remove('hidden');
+
+      // Auto close after 3 seconds
+      setTimeout(() => {
+        closeModal();
+      }, 3000);
+    });
+  });
+</script>
+
+<style>
+  #modal-content {
+    position: relative;
+  }
+</style>

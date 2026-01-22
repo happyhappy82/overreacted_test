@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import QnA from "@/components/QnA.astro";
+import CTASection from "@/components/CTASection.astro";
 import { getSortedPostsData, getPostBySlug } from "@/lib/posts";
 import { extractQnA, removeQnASection } from "@/lib/qna-utils";
 import { marked } from "marked";
@@ -203,6 +204,8 @@ const faqSchema =
           <QnA items={qnaItems} />
         </>
       )}
+
+      <CTASection />
     </article>
   </main>
 </Layout>
