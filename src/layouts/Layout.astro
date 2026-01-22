@@ -51,8 +51,17 @@ const organizationSchema = {
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="light">
   <head>
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
@@ -103,7 +112,7 @@ const organizationSchema = {
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
   </head>
-  <body class="mx-auto max-w-2xl bg-white px-5 py-12 text-black">
+  <body class="mx-auto max-w-2xl bg-white dark:bg-[#121212] px-5 py-12 text-black dark:text-[#e5e5e5] transition-colors duration-200">
     <slot />
     <Analytics />
   </body>

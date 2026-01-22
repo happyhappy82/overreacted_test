@@ -185,14 +185,14 @@ const faqSchema =
   <TableOfContents headings={headings} />
 
   <main>
-    <article class="prose prose-lg max-w-none">
+    <article class="prose prose-lg dark:prose-invert max-w-none">
       <h1
         class="text-[48px] font-black leading-tight mb-2"
         style={`color: ${post.lightColor}`}
       >
         {post.title}
       </h1>
-      <p class="text-[13px] text-gray-700 mb-8">
+      <p class="text-[13px] text-gray-700 dark:text-gray-400 mb-8">
         <time datetime={post.date}>{displayDate}</time> · {post.readingTime}
       </p>
       <div class="mt-8" set:html={htmlContent} />

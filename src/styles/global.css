@@ -9,6 +9,13 @@
   --darkLink: #0052a3;
 }
 
+.dark {
+  --bg: #121212;
+  --text: #e5e5e5;
+  --lightLink: #60a5fa;
+  --darkLink: #3b82f6;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
