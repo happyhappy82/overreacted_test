@@ -262,15 +262,23 @@ async function getPageBlocks(pageId) {
   return blocks;
 }
 
-async function convertPageToMarkdown(page) {
+async function convertPageToMarkdown(page, existingDate = null) {
   const pageId = page.id;
   const properties = page.properties;
 
   // Properties 추출 (rich_text는 여러 조각으로 나뉠 수 있으므로 전체 합침)
   const title = properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
   const status = properties.Status?.status?.name || 'Draft';
-  const dateRaw = properties.Date?.date?.start || new Date().toISOString();
-  const dateValue = dateRaw.split('T')[0]; // 날짜만 추출 (시간 제거)
+
+  // 기존 날짜가 있으면 보존, 없으면 Notion Date 또는 오늘 날짜 사용
+  let dateValue;
+  if (existingDate) {
+    dateValue = existingDate; // 기존 파일의 날짜 보존
+  } else {
+    const dateRaw = properties.Date?.date?.start || new Date().toISOString();
+    dateValue = dateRaw.split('T')[0]; // 날짜만 추출 (시간 제거)
+  }
+
   const tags = properties.Tags?.multi_select?.map(tag => tag.name) || [];
   const excerptProp = properties.Excerpt?.rich_text?.map(t => t.plain_text).join('') || '';
 
@@ -354,8 +362,9 @@ async function updatePage(pageId) {
 
   const outputDir = path.join(__dirname, '..', 'content', 'posts');
 
-  // 먼저 기존 파일 찾아서 삭제 (제목이 바뀌었을 수 있으므로)
+  // 먼저 기존 파일 찾아서 날짜 보존 후 삭제 (제목이 바뀌었을 수 있으므로)
   let isNewPost = true; // 신규 발행인지 체크
+  let existingDate = null; // 기존 파일의 날짜 보존
   const files = fs.readdirSync(outputDir).filter(f => f.endsWith('.md'));
   for (const file of files) {
     const filePath = path.join(outputDir, file);
@@ -363,6 +372,9 @@ async function updatePage(pageId) {
     const { data } = matter(content);
 
     if (data.notion_id === pageId) {
+      // 기존 파일의 날짜 보존
+      existingDate = data.date;
+      console.log(`📅 기존 날짜 보존: ${existingDate}`);
       fs.unlinkSync(filePath);
       console.log(`🗑️ Removed old file: content/posts/${file}`);
       isNewPost = false; // 기존 파일이 있었으면 수정
@@ -370,9 +382,9 @@ async function updatePage(pageId) {
     }
   }
 
-  // 새로 변환해서 저장
+  // 새로 변환해서 저장 (기존 날짜 전달)
   const page = await notion.pages.retrieve({ page_id: pageId });
-  const result = await convertPageToMarkdown(page);
+  const result = await convertPageToMarkdown(page, existingDate);
 
   if (result) {
     const filePath = path.join(outputDir, `${result.slug}.md`);
