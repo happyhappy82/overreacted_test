@@ -111,6 +111,22 @@ PC 웹 환경뿐만 아니라 모바일 앱에서도 자유롭게 오디오를 �
 
 이번 글에서는 ‘노트북LM 팟캐스트 만드는 법’에 대해 알아보았습니다. 다음에도 도움이 되는 내용으로 찾아오겠습니다. 끝까지 읽어주셔서 고맙습니다.
 
+
+
+[**노트북LM 마인드맵 사용법 (PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%A7%88%EC%9D%B8%EB%93%9C%EB%A7%B5-%EC%82%AC%EC%9A%A9%EB%B2%95-pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북 LM 딥리서치 사용법**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81-lm-%EB%94%A5%EB%A6%AC%EC%84%9C%EC%B9%98-%EC%82%AC%EC%9A%A9%EB%B2%95)
+
+[**노트북LM 플래시카드 만드는 법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%94%8C%EB%9E%98%EC%8B%9C%EC%B9%B4%EB%93%9C-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 인포그래픽 만드는 간단한 방법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EC%9D%B8%ED%8F%AC%EA%B7%B8%EB%9E%98%ED%94%BD-%EB%A7%8C%EB%93%9C%EB%8A%94-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B0%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 퀴즈 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%80%B4%EC%A6%88-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 동영상 개요 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%9C%EC%9A%94-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+
+
 ## **자주 묻는 질문**
 
 Q. 한국어로 된 소스도 영어로 대화하게 만들 수 있나요?
