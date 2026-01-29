@@ -60,6 +60,11 @@ function extractHeadings(content: string): Heading[] {
 
 const headings = extractHeadings(contentWithoutQnA);
 
+// Q&A가 있으면 목차에 "자주 묻는 질문" 추가
+if (qnaItems.length > 0) {
+  headings.push({ id: "자주-묻는-질문", text: "자주 묻는 질문", level: 2 });
+}
+
 // Custom marked renderer
 const renderer = new marked.Renderer();
 
