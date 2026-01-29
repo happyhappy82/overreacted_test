@@ -95,6 +95,22 @@ PC버전과 동일하게 스튜디오 메뉴를 확인할 수 있고
 
 이번 글에서는 PC버전과 모바일버전에서 ‘노트북LM 인포그래픽 만드는 간단한 방법’에 대해 알아보았습니다. 다음에도 도움이 되는 내용으로 찾아오겠습니다. 끝까지 읽어주셔서 고맙습니다.
 
+
+
+[**노트북LM 마인드맵 사용법 (PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%A7%88%EC%9D%B8%EB%93%9C%EB%A7%B5-%EC%82%AC%EC%9A%A9%EB%B2%95-pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북 LM 딥리서치 사용법**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81-lm-%EB%94%A5%EB%A6%AC%EC%84%9C%EC%B9%98-%EC%82%AC%EC%9A%A9%EB%B2%95)
+
+[**노트북LM 플래시카드 만드는 법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%94%8C%EB%9E%98%EC%8B%9C%EC%B9%B4%EB%93%9C-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 팟캐스트 만드는 법(AI 오디오 오버뷰)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%8C%9F%EC%BA%90%EC%8A%A4%ED%8A%B8-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95ai-%EC%98%A4%EB%94%94%EC%98%A4-%EC%98%A4%EB%B2%84%EB%B7%B0)
+
+[**노트북LM 퀴즈 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%80%B4%EC%A6%88-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 동영상 개요 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%9C%EC%9A%94-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+
+
 ## 자주 묻는 질문
 
 Q. 인포그래픽 생성 중에 다른 페이지를 봐도 되나요?
