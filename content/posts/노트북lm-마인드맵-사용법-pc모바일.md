@@ -91,6 +91,18 @@ PC 웹 브라우저를 기반으로 마인드맵을 생성, 조작, 저장하는
 
 
 
+[**노트북 LM 딥리서치 사용법**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81-lm-%EB%94%A5%EB%A6%AC%EC%84%9C%EC%B9%98-%EC%82%AC%EC%9A%A9%EB%B2%95)
+
+[**노트북LM 플래시카드 만드는 법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%94%8C%EB%9E%98%EC%8B%9C%EC%B9%B4%EB%93%9C-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 인포그래픽 만드는 간단한 방법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EC%9D%B8%ED%8F%AC%EA%B7%B8%EB%9E%98%ED%94%BD-%EB%A7%8C%EB%93%9C%EB%8A%94-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B0%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 팟캐스트 만드는 법(AI 오디오 오버뷰)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%8C%9F%EC%BA%90%EC%8A%A4%ED%8A%B8-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95ai-%EC%98%A4%EB%94%94%EC%98%A4-%EC%98%A4%EB%B2%84%EB%B7%B0)
+
+[**노트북LM 퀴즈 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%80%B4%EC%A6%88-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+[**노트북LM 동영상 개요 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%9C%EC%9A%94-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
 ## **Q&A**
 
 **Q. 마인드맵 생성 버튼이 보이지 않는데 어떻게 해야 하나요?**
