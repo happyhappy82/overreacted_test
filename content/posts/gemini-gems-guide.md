@@ -2,6 +2,7 @@
 title: "제미나이 Gems 만들기 및 설정방법 (PC, 모바일)"
 date: "2025-01-07"
 excerpt: "제미나이 Gems로 맞춤형 AI 도구를 만들어 업무 효율을 높이는 방법을 알아봅니다. PC와 모바일에서 설정하는 완벽 가이드입니다."
+notion_id: 2e1753eb-c013-8061-a314-e2cd17587ef0
 lightColor: "#0066cc"
 darkColor: "#0052a3"
 ---

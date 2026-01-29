@@ -2,6 +2,7 @@
 title: "퍼플렉시티 AI 구독료, 가격 총정리 - 무료부터 엔터프라이즈까지"
 date: "2025-01-07"
 excerpt: "퍼플렉시티 AI의 무료, Pro, Education, Max, Enterprise 플랜의 가격과 혜택을 상세히 비교합니다. 학생 할인과 API 요금까지 한눈에 확인하세요."
+notion_id: 2e0753eb-c013-808a-8be5-f4182384de32
 lightColor: "#0066cc"
 darkColor: "#0052a3"
 ---
