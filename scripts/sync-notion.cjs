@@ -262,7 +262,7 @@ async function getPageBlocks(pageId) {
   return blocks;
 }
 
-async function convertPageToMarkdown(page) {
+async function convertPageToMarkdown(page, originalDate = null) {
   const pageId = page.id;
   const properties = page.properties;
 
@@ -270,8 +270,9 @@ async function convertPageToMarkdown(page) {
   const title = properties.Title?.title?.map(t => t.plain_text).join('') || 'Untitled';
   const status = properties.Status?.status?.name || 'Draft';
 
-  // Notion Date가 있으면 사용, 없으면 오늘 날짜 (웹훅 발행 시 자동 설정)
-  const dateRaw = properties.Date?.date?.start || new Date().toISOString();
+  // Notion Date가 있으면 사용, 없으면 기존 날짜 사용, 그것도 없으면 오늘 날짜
+  const notionDate = properties.Date?.date?.start;
+  const dateRaw = notionDate || originalDate || new Date().toISOString();
   const dateValue = dateRaw.split('T')[0]; // 날짜만 추출 (시간 제거)
 
   const tags = properties.Tags?.multi_select?.map(tag => tag.name) || [];
@@ -357,8 +358,9 @@ async function updatePage(pageId) {
 
   const outputDir = path.join(__dirname, '..', 'content', 'posts');
 
-  // 먼저 기존 파일 찾아서 삭제 (제목이 바뀌었을 수 있으므로)
+  // 먼저 기존 파일 찾아서 원래 날짜 저장 후 삭제 (제목이 바뀌었을 수 있으므로)
   let isNewPost = true; // 신규 발행인지 체크
+  let originalDate = null; // 기존 파일의 날짜 보존
   const files = fs.readdirSync(outputDir).filter(f => f.endsWith('.md'));
   for (const file of files) {
     const filePath = path.join(outputDir, file);
@@ -366,16 +368,18 @@ async function updatePage(pageId) {
     const { data } = matter(content);
 
     if (data.notion_id === pageId) {
+      originalDate = data.date; // 기존 날짜 저장
       fs.unlinkSync(filePath);
       console.log(`🗑️ Removed old file: content/posts/${file}`);
+      console.log(`📅 Original date preserved: ${originalDate}`);
       isNewPost = false; // 기존 파일이 있었으면 수정
       break;
     }
   }
 
-  // 새로 변환해서 저장 (Notion Date 사용, 없으면 오늘 날짜)
+  // 새로 변환해서 저장 (Notion Date 사용, 없으면 기존 날짜, 그것도 없으면 오늘 날짜)
   const page = await notion.pages.retrieve({ page_id: pageId });
-  const result = await convertPageToMarkdown(page);
+  const result = await convertPageToMarkdown(page, originalDate);
 
   if (result) {
     const filePath = path.join(outputDir, `${result.slug}.md`);
