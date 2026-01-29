@@ -1,6 +1,6 @@
 ---
 title: 노트북 LM 딥리서치 사용법
-date: '2026-01-22'
+date: '2026-01-29'
 excerpt: >-
   NotebookLM의 딥리서치는 특정 질문에 대해 리서치 플랜을 수립하고 수많은 웹사이트를 탐색하여 출처가 명확한 보고서를 생성합니다. 이
   보고서와 함께 사용된 소스들이 노트북 LM 노트북에 저장되어 요약 Q&A 슬라이드 변환 등 다양한 후속 작업에 활용될 수 있습니다. 사용자는
@@ -138,6 +138,15 @@ NotebookLM에서 딥리서치를 실행하는 과정은 명확합니다.
 
 - [**노트북LM 플래시카드 만드는 법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%94%8C%EB%9E%98%EC%8B%9C%EC%B9%B4%EB%93%9C-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
 - [**노트북LM 인포그래픽 만드는 간단한 방법**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EC%9D%B8%ED%8F%AC%EA%B7%B8%EB%9E%98%ED%94%BD-%EB%A7%8C%EB%93%9C%EB%8A%94-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B0%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+- [**노트북LM 마인드맵 사용법 (PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%A7%88%EC%9D%B8%EB%93%9C%EB%A7%B5-%EC%82%AC%EC%9A%A9%EB%B2%95-pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+- [**노트북 LM 딥리서치 사용법**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81-lm-%EB%94%A5%EB%A6%AC%EC%84%9C%EC%B9%98-%EC%82%AC%EC%9A%A9%EB%B2%95)
+- [**노트북LM 팟캐스트 만드는 법(AI 오디오 오버뷰)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%8C%9F%EC%BA%90%EC%8A%A4%ED%8A%B8-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95ai-%EC%98%A4%EB%94%94%EC%98%A4-%EC%98%A4%EB%B2%84%EB%B7%B0)
+- [**노트북LM 퀴즈 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%ED%80%B4%EC%A6%88-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+- [**노트북LM 동영상 개요 사용법(PC,모바일)**](https://blog.aijeong.com/%EB%85%B8%ED%8A%B8%EB%B6%81lm-%EB%8F%99%EC%98%81%EC%83%81-%EA%B0%9C%EC%9A%94-%EC%82%AC%EC%9A%A9%EB%B2%95pc%EB%AA%A8%EB%B0%94%EC%9D%BC)
+
+
+
+
 ## Q&A
 
 **Q. 딥리서치를 사용했는데 원하는 결과가 나오지 않는다면 어떻게 해야 하나요?**
