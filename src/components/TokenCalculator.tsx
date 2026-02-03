@@ -20,6 +20,7 @@ const PROVIDERS: Record<string, ProviderData> = {
     color: "#10a37f",
     models: [
       { name: "GPT-5.2", input: 1.75, output: 14, contextWindow: "1M" },
+      { name: "GPT-5.1", input: 1.25, output: 10, contextWindow: "1M" },
       { name: "GPT-5", input: 1.25, output: 10, contextWindow: "1M" },
       { name: "GPT-5 mini", input: 0.25, output: 2, contextWindow: "1M" },
       { name: "GPT-5 nano", input: 0.05, output: 0.4, contextWindow: "1M" },
@@ -52,6 +53,7 @@ const PROVIDERS: Record<string, ProviderData> = {
       { name: "Gemini 2.5 Flash", input: 0.3, output: 2.5, contextWindow: "1M" },
       { name: "Gemini 2.5 Flash-Lite", input: 0.1, output: 0.4, contextWindow: "1M" },
       { name: "Gemini 2.0 Flash", input: 0.1, output: 0.4, contextWindow: "1M" },
+      { name: "Gemini 2.0 Flash-Lite", input: 0.075, output: 0.3, contextWindow: "1M" },
       { name: "Gemini 3 Pro Preview", input: 2, output: 12, contextWindow: "1M" },
       { name: "Gemini 3 Flash Preview", input: 0.5, output: 3, contextWindow: "1M" },
     ],
