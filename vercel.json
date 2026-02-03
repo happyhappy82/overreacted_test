@@ -8,12 +8,5 @@
       "destination": "/sitemap-index.xml",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "calc.aijeong.com" }],
-      "destination": "/token-calculator"
-    }
   ]
 }
