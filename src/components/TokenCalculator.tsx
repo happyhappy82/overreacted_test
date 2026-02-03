@@ -19,6 +19,10 @@ const PROVIDERS: Record<string, ProviderData> = {
     label: "OpenAI",
     color: "#10a37f",
     models: [
+      { name: "GPT-5.2", input: 1.75, output: 14, contextWindow: "1M" },
+      { name: "GPT-5", input: 1.25, output: 10, contextWindow: "1M" },
+      { name: "GPT-5 mini", input: 0.25, output: 2, contextWindow: "1M" },
+      { name: "GPT-5 nano", input: 0.05, output: 0.4, contextWindow: "1M" },
       { name: "GPT-4.1", input: 2, output: 8, contextWindow: "1M" },
       { name: "GPT-4.1 mini", input: 0.4, output: 1.6, contextWindow: "1M" },
       { name: "GPT-4.1 nano", input: 0.1, output: 0.4, contextWindow: "1M" },
@@ -26,7 +30,6 @@ const PROVIDERS: Record<string, ProviderData> = {
       { name: "GPT-4o mini", input: 0.15, output: 0.6, contextWindow: "128K" },
       { name: "o3", input: 2, output: 8, contextWindow: "200K" },
       { name: "o4-mini", input: 1.1, output: 4.4, contextWindow: "200K" },
-      { name: "o3-mini", input: 1.1, output: 4.4, contextWindow: "200K" },
     ],
   },
   claude: {
@@ -36,8 +39,9 @@ const PROVIDERS: Record<string, ProviderData> = {
       { name: "Claude Opus 4.5", input: 5, output: 25, contextWindow: "200K" },
       { name: "Claude Sonnet 4.5", input: 3, output: 15, contextWindow: "200K" },
       { name: "Claude Haiku 4.5", input: 1, output: 5, contextWindow: "200K" },
-      { name: "Claude Opus 4", input: 15, output: 75, contextWindow: "200K" },
+      { name: "Claude Opus 4.1", input: 15, output: 75, contextWindow: "200K" },
       { name: "Claude Sonnet 4", input: 3, output: 15, contextWindow: "200K" },
+      { name: "Claude Opus 4", input: 15, output: 75, contextWindow: "200K" },
     ],
   },
   gemini: {
@@ -60,7 +64,6 @@ const PROVIDERS: Record<string, ProviderData> = {
       { name: "Sonar", input: 1, output: 1, contextWindow: "127K" },
       { name: "Sonar Reasoning Pro", input: 2, output: 8, contextWindow: "128K" },
       { name: "Sonar Deep Research", input: 2, output: 8, contextWindow: "128K" },
-      { name: "Sonar Pro Search", input: 3, output: 15, contextWindow: "200K" },
     ],
   },
 };
