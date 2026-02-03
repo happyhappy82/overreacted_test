@@ -16,15 +16,16 @@ interface ProviderData {
 
 const PROVIDERS: Record<string, ProviderData> = {
   openai: {
-    label: "GPT",
+    label: "OpenAI",
     color: "#10a37f",
     models: [
+      { name: "GPT-4.1", input: 2, output: 8, contextWindow: "1M" },
+      { name: "GPT-4.1 mini", input: 0.4, output: 1.6, contextWindow: "1M" },
+      { name: "GPT-4.1 nano", input: 0.1, output: 0.4, contextWindow: "1M" },
       { name: "GPT-4o", input: 2.5, output: 10, contextWindow: "128K" },
       { name: "GPT-4o mini", input: 0.15, output: 0.6, contextWindow: "128K" },
-      { name: "GPT-4 Turbo", input: 10, output: 30, contextWindow: "128K" },
-      { name: "GPT-4", input: 30, output: 60, contextWindow: "8K" },
-      { name: "o1", input: 15, output: 60, contextWindow: "200K" },
-      { name: "o1-mini", input: 3, output: 12, contextWindow: "128K" },
+      { name: "o3", input: 2, output: 8, contextWindow: "200K" },
+      { name: "o4-mini", input: 1.1, output: 4.4, contextWindow: "200K" },
       { name: "o3-mini", input: 1.1, output: 4.4, contextWindow: "200K" },
     ],
   },
@@ -32,22 +33,23 @@ const PROVIDERS: Record<string, ProviderData> = {
     label: "Claude",
     color: "#d97706",
     models: [
+      { name: "Claude Opus 4.5", input: 5, output: 25, contextWindow: "200K" },
+      { name: "Claude Sonnet 4.5", input: 3, output: 15, contextWindow: "200K" },
+      { name: "Claude Haiku 4.5", input: 1, output: 5, contextWindow: "200K" },
       { name: "Claude Opus 4", input: 15, output: 75, contextWindow: "200K" },
       { name: "Claude Sonnet 4", input: 3, output: 15, contextWindow: "200K" },
-      { name: "Claude Sonnet 3.5", input: 3, output: 15, contextWindow: "200K" },
-      { name: "Claude Haiku 3.5", input: 0.8, output: 4, contextWindow: "200K" },
-      { name: "Claude Opus 3", input: 15, output: 75, contextWindow: "200K" },
     ],
   },
   gemini: {
     label: "Gemini",
     color: "#4285f4",
     models: [
-      { name: "Gemini 2.0 Flash", input: 0.1, output: 0.4, contextWindow: "1M" },
-      { name: "Gemini 1.5 Pro", input: 1.25, output: 5, contextWindow: "2M" },
-      { name: "Gemini 1.5 Flash", input: 0.075, output: 0.3, contextWindow: "1M" },
       { name: "Gemini 2.5 Pro", input: 1.25, output: 10, contextWindow: "1M" },
-      { name: "Gemini 2.5 Flash", input: 0.15, output: 0.6, contextWindow: "1M" },
+      { name: "Gemini 2.5 Flash", input: 0.3, output: 2.5, contextWindow: "1M" },
+      { name: "Gemini 2.5 Flash-Lite", input: 0.1, output: 0.4, contextWindow: "1M" },
+      { name: "Gemini 2.0 Flash", input: 0.1, output: 0.4, contextWindow: "1M" },
+      { name: "Gemini 3 Pro Preview", input: 2, output: 12, contextWindow: "1M" },
+      { name: "Gemini 3 Flash Preview", input: 0.5, output: 3, contextWindow: "1M" },
     ],
   },
   perplexity: {
@@ -55,10 +57,10 @@ const PROVIDERS: Record<string, ProviderData> = {
     color: "#20808d",
     models: [
       { name: "Sonar Pro", input: 3, output: 15, contextWindow: "200K" },
-      { name: "Sonar", input: 1, output: 5, contextWindow: "128K" },
+      { name: "Sonar", input: 1, output: 1, contextWindow: "127K" },
       { name: "Sonar Reasoning Pro", input: 2, output: 8, contextWindow: "128K" },
-      { name: "Sonar Reasoning", input: 1, output: 5, contextWindow: "128K" },
-      { name: "R1-1776", input: 2, output: 8, contextWindow: "128K" },
+      { name: "Sonar Deep Research", input: 2, output: 8, contextWindow: "128K" },
+      { name: "Sonar Pro Search", input: 3, output: 15, contextWindow: "200K" },
     ],
   },
 };
