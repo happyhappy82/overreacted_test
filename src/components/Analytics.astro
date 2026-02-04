@@ -1,55 +1,58 @@
 ---
-// Analytics component - loads GA and AdSense with aggressive lazy loading
+// Analytics component - loads GA and AdSense with lazy loading
+// is:inline 필수: Vite 번들링 없이 원본 그대로 실행 (arguments 키워드 보존)
 ---
 
-<script>
-  let analyticsLoaded = false;
+<script is:inline>
+  (function() {
+    var analyticsLoaded = false;
 
-  function loadGA() {
-    const script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-9VQ2JT7ZYK";
-    script.async = true;
-    document.head.appendChild(script);
+    function loadGA() {
+      // Google 공식 패턴: dataLayer + gtag 먼저 초기화, 그 다음 스크립트 로드
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function() {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-9VQ2JT7ZYK', { send_page_view: true });
 
-    script.onload = () => {
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      function gtag(...args: any[]) {
-        (window as any).dataLayer.push(args);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-9VQ2JT7ZYK", { send_page_view: true });
-    };
-  }
+      var script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-9VQ2JT7ZYK';
+      script.async = true;
+      document.head.appendChild(script);
+    }
 
-  function loadAdSense() {
-    const script = document.createElement("script");
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2923981352664263";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    document.head.appendChild(script);
-  }
+    function loadAdSense() {
+      var script = document.createElement('script');
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2923981352664263';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+    }
 
-  function loadAll() {
-    if (analyticsLoaded) return;
-    analyticsLoaded = true;
+    function loadAll() {
+      if (analyticsLoaded) return;
+      analyticsLoaded = true;
 
-    // GA first (lighter)
-    loadGA();
+      loadGA();
 
-    // AdSense 2초 후 (무거움)
-    setTimeout(loadAdSense, 2000);
-  }
+      // AdSense 2초 후 (무거움)
+      setTimeout(loadAdSense, 2000);
+    }
 
-  // 전략: 사용자 상호작용 또는 5초 후 로드
-  const events = ["scroll", "click", "touchstart", "keydown"];
+    // 전략: 사용자 상호작용 또는 5초 후 로드
+    var events = ['scroll', 'click', 'touchstart', 'keydown'];
 
-  function onInteraction() {
-    loadAll();
-    events.forEach(e => window.removeEventListener(e, onInteraction));
-  }
+    function onInteraction() {
+      loadAll();
+      events.forEach(function(e) { window.removeEventListener(e, onInteraction); });
+    }
 
-  events.forEach(e => window.addEventListener(e, onInteraction, { once: true, passive: true }));
+    events.forEach(function(e) {
+      window.addEventListener(e, onInteraction, { once: true, passive: true });
+    });
 
-  // 5초 후 강제 로드 (상호작용 없어도)
-  setTimeout(loadAll, 5000);
+    // 5초 후 강제 로드 (상호작용 없어도)
+    setTimeout(loadAll, 5000);
+  })();
 </script>
