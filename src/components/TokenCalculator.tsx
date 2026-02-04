@@ -152,7 +152,7 @@ export default function TokenCalculator({
   return (
     <div className="space-y-6">
       {/* Provider Tabs */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 justify-center">
         {Object.entries(PROVIDERS).map(([key, p]) => {
           const isActive = activeProvider === key;
           const commonClass = `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${

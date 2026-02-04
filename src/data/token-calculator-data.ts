@@ -15,9 +15,9 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
   {
     slug: "gpt",
     providerKey: "openai",
-    title: "GPT API 토큰 계산기",
+    title: "ChatGPT API 토큰 계산기",
     metaTitle:
-      "GPT API 토큰 계산기 — GPT-5, GPT-4.1, o3 비용 계산 | 에이정",
+      "ChatGPT API 토큰 계산기 — GPT-5, GPT-4.1, o3 비용 계산 | 에이정",
     description:
       "GPT-5.2, GPT-5, GPT-4.1, GPT-4o, o3, o4-mini 등 OpenAI GPT 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 GPT 토큰 계산기.",
     heroSubtitle: "OpenAI GPT 모델 전용 토큰 계산",
