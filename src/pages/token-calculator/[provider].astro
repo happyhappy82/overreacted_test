@@ -3,10 +3,21 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import TokenCalculator from "@/components/TokenCalculator";
 import AijeongInsights from "@/components/AijeongInsights";
+import {
+  PROVIDER_PAGES,
+  getProviderPageBySlug,
+} from "@/data/token-calculator-data";
 
-const title = "무료 AI 토큰계산기 — GPT, Claude, Gemini, Perplexity 비용 계산 | 에이정";
-const description = "GPT-5, GPT-4.1, Claude Opus 4.5, Gemini 2.5, Perplexity Sonar 등 주요 AI 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 AI 토큰계산기.";
-const canonical = "https://blog.aijeong.com/token-calculator";
+export function getStaticPaths() {
+  return PROVIDER_PAGES.map((p) => ({
+    params: { provider: p.slug },
+  }));
+}
+
+const { provider: slug } = Astro.params;
+const pageData = getProviderPageBySlug(slug as string)!;
+
+const canonical = `https://blog.aijeong.com/token-calculator/${slug}`;
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -22,6 +33,12 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 2,
       name: "무료 AI 토큰계산기",
+      item: "https://blog.aijeong.com/token-calculator",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: pageData.title,
       item: canonical,
     },
   ],
@@ -30,46 +47,20 @@ const breadcrumbSchema = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "AI 토큰이란 무엇인가요?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "토큰은 AI 모델이 텍스트를 처리하는 기본 단위입니다. 한국어의 경우 한 글자가 약 1.5~2개의 토큰으로 변환되며, 영어는 한 단어가 약 1~2개의 토큰입니다.",
-      },
+  mainEntity: pageData.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
     },
-    {
-      "@type": "Question",
-      name: "이 토큰 계산기는 무료인가요?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "네, 에이정 무료 AI 토큰계산기는 완전 무료이며 모든 사용자가 자유롭게 이용할 수 있습니다.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "어떤 AI 모델을 지원하나요?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "OpenAI(GPT-5.2, GPT-5, GPT-4.1 등), Anthropic(Claude Opus 4.5, Sonnet 4.5, Haiku 4.5), Google(Gemini 2.5 Pro, 2.5 Flash, 3 Pro Preview), Perplexity(Sonar Pro, Sonar Deep Research) 등 주요 LLM 모델을 모두 지원합니다.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "토큰 수는 정확한가요?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "이 계산기는 통계적 방법으로 토큰 수를 추정합니다. 실제 토큰 수는 각 모델의 토크나이저에 따라 약간 다를 수 있으나, 비용 추정에 충분히 유용합니다.",
-      },
-    },
-  ],
+  })),
 };
 ---
 
 <Layout
-  title={title}
-  description={description}
+  title={pageData.metaTitle}
+  description={pageData.description}
   canonical={canonical}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
@@ -80,20 +71,23 @@ const faqSchema = {
     <!-- Hero Section -->
     <section class="text-center mb-10">
       <p class="text-sm font-semibold text-[#0b2077] dark:text-blue-400 mb-2 tracking-wide">
-        어려운 토큰 계산, 1초 만에 끝내기
+        {pageData.heroSubtitle}
       </p>
       <h1 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-3 leading-tight">
-        무료 AI 토큰계산기
+        {pageData.title}
       </h1>
       <p class="text-gray-600 dark:text-gray-400 text-base max-w-xl mx-auto">
-        GPT, Claude, Gemini, Perplexity 등 주요 AI 모델의 토큰 수와 API 비용을
-        실시간으로 계산하세요.
+        {pageData.heroDescription}
       </p>
     </section>
 
     <!-- Calculator -->
     <section class="mb-16">
-      <TokenCalculator client:load />
+      <TokenCalculator
+        client:load
+        defaultProvider={pageData.providerKey}
+        useLinks={true}
+      />
     </section>
 
     <!-- How It Works -->
@@ -178,77 +172,42 @@ const faqSchema = {
       </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (provider-specific) -->
     <section class="mb-16">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
         자주하는 질문
       </h2>
       <div class="space-y-4" id="faq-list">
-        <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-          <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" aria-expanded="false">
-            <span class="font-semibold text-gray-900 dark:text-white text-sm">AI 토큰이란 무엇인가요?</span>
-            <svg class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div class="faq-content hidden px-5 pb-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              토큰은 AI 모델이 텍스트를 처리하는 기본 단위입니다. 한국어의 경우 한 글자가 약 1.5~2개의 토큰으로 변환되며, 영어는 한 단어가 약 1~2개의 토큰입니다. AI API 비용은 이 토큰 수를 기준으로 산정됩니다.
-            </p>
+        {pageData.faqs.map((faq) => (
+          <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+            <button
+              class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+              aria-expanded="false"
+            >
+              <span class="font-semibold text-gray-900 dark:text-white text-sm">
+                {faq.question}
+              </span>
+              <svg
+                class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 flex-shrink-0 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-5 pb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-          <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" aria-expanded="false">
-            <span class="font-semibold text-gray-900 dark:text-white text-sm">이 토큰 계산기는 무료인가요?</span>
-            <svg class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div class="faq-content hidden px-5 pb-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              네, 에이정 무료 AI 토큰계산기는 완전 무료이며 회원가입 없이 모든 사용자가 자유롭게 이용할 수 있습니다. 횟수 제한도 없습니다.
-            </p>
-          </div>
-        </div>
-        <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-          <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" aria-expanded="false">
-            <span class="font-semibold text-gray-900 dark:text-white text-sm">어떤 AI 모델을 지원하나요?</span>
-            <svg class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div class="faq-content hidden px-5 pb-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              OpenAI(GPT-5.2, GPT-5, GPT-4.1 등), Anthropic(Claude Opus 4.5, Sonnet 4.5, Haiku 4.5), Google(Gemini 2.5 Pro, 2.5 Flash, 3 Pro Preview), Perplexity(Sonar Pro, Sonar Deep Research) 등 주요 LLM 모델을 모두 지원합니다.
-            </p>
-          </div>
-        </div>
-        <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-          <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" aria-expanded="false">
-            <span class="font-semibold text-gray-900 dark:text-white text-sm">토큰 수는 정확한가요?</span>
-            <svg class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div class="faq-content hidden px-5 pb-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              이 계산기는 한국어와 영어의 토큰 변환 특성을 반영한 통계적 추정 방법을 사용합니다. 실제 토큰 수는 각 모델의 토크나이저에 따라 약간 다를 수 있으나, API 비용 추정에 충분히 유용한 수준의 정확도를 제공합니다.
-            </p>
-          </div>
-        </div>
-        <div class="faq-item border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
-          <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" aria-expanded="false">
-            <span class="font-semibold text-gray-900 dark:text-white text-sm">입력 토큰과 출력 토큰의 차이는 무엇인가요?</span>
-            <svg class="faq-icon w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div class="faq-content hidden px-5 pb-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              입력 토큰은 사용자가 AI에게 보내는 프롬프트의 토큰 수이고, 출력 토큰은 AI가 생성하는 응답의 토큰 수입니다. 대부분의 AI 서비스에서 출력 토큰이 입력 토큰보다 비싸며, 이는 생성 과정에 더 많은 연산이 필요하기 때문입니다.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 

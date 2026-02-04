@@ -91,9 +91,32 @@ function formatCost(n: number): string {
   return "$" + n.toFixed(2);
 }
 
+// ─── Provider slug mapping ───
+const PROVIDER_SLUGS: Record<string, string> = {
+  openai: "gpt",
+  claude: "claude",
+  gemini: "gemini",
+  perplexity: "perplexity",
+};
+
+const SLUG_TO_PROVIDER: Record<string, string> = {
+  gpt: "openai",
+  claude: "claude",
+  gemini: "gemini",
+  perplexity: "perplexity",
+};
+
+interface TokenCalculatorProps {
+  defaultProvider?: string; // provider key (openai, claude, gemini, perplexity)
+  useLinks?: boolean; // if true, provider tabs are <a> links to sub-pages
+}
+
 // ─── Component ───
-export default function TokenCalculator() {
-  const [activeProvider, setActiveProvider] = useState("openai");
+export default function TokenCalculator({
+  defaultProvider = "openai",
+  useLinks = false,
+}: TokenCalculatorProps) {
+  const [activeProvider, setActiveProvider] = useState(defaultProvider);
   const [selectedModelIdx, setSelectedModelIdx] = useState(0);
   const [inputText, setInputText] = useState("");
   const [requestCount, setRequestCount] = useState(1);
@@ -130,20 +153,39 @@ export default function TokenCalculator() {
     <div className="space-y-6">
       {/* Provider Tabs */}
       <div className="flex flex-wrap gap-2">
-        {Object.entries(PROVIDERS).map(([key, p]) => (
-          <button
-            key={key}
-            onClick={() => handleProviderChange(key)}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
-              activeProvider === key
-                ? "text-white shadow-md"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-            }`}
-            style={activeProvider === key ? { backgroundColor: p.color } : undefined}
-          >
-            {p.label}
-          </button>
-        ))}
+        {Object.entries(PROVIDERS).map(([key, p]) => {
+          const isActive = activeProvider === key;
+          const commonClass = `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+            isActive
+              ? "text-white shadow-md"
+              : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+          }`;
+          const activeStyle = isActive ? { backgroundColor: p.color } : undefined;
+
+          if (useLinks) {
+            return (
+              <a
+                key={key}
+                href={`/token-calculator/${PROVIDER_SLUGS[key]}`}
+                className={`${commonClass} inline-block`}
+                style={activeStyle}
+              >
+                {p.label}
+              </a>
+            );
+          }
+
+          return (
+            <button
+              key={key}
+              onClick={() => handleProviderChange(key)}
+              className={commonClass}
+              style={activeStyle}
+            >
+              {p.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Model Selector */}
