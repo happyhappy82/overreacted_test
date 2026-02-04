@@ -155,7 +155,7 @@ export default function TokenCalculator({
       <div className="flex gap-2 justify-center items-center w-full">
         {Object.entries(PROVIDERS).map(([key, p]) => {
           const isActive = activeProvider === key;
-          const commonClass = `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+          const commonClass = `h-10 px-5 rounded-lg text-sm font-semibold transition-all duration-200 inline-flex items-center justify-center leading-none ${
             isActive
               ? "text-white shadow-md"
               : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -167,7 +167,7 @@ export default function TokenCalculator({
               <a
                 key={key}
                 href={`/token-calculator/${PROVIDER_SLUGS[key]}`}
-                className={`${commonClass} inline-block`}
+                className={commonClass}
                 style={activeStyle}
               >
                 {p.label}
