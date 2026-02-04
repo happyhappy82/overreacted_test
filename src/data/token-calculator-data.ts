@@ -13,7 +13,7 @@ export interface ProviderPageData {
 
 export const PROVIDER_PAGES: ProviderPageData[] = [
   {
-    slug: "gpt",
+    slug: "chatgpt",
     providerKey: "openai",
     title: "ChatGPT API 토큰 계산기",
     metaTitle:

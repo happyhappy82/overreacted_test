@@ -93,14 +93,14 @@ function formatCost(n: number): string {
 
 // ─── Provider slug mapping ───
 const PROVIDER_SLUGS: Record<string, string> = {
-  openai: "gpt",
+  openai: "chatgpt",
   claude: "claude",
   gemini: "gemini",
   perplexity: "perplexity",
 };
 
 const SLUG_TO_PROVIDER: Record<string, string> = {
-  gpt: "openai",
+  chatgpt: "openai",
   claude: "claude",
   gemini: "gemini",
   perplexity: "perplexity",
