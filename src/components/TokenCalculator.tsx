@@ -16,7 +16,7 @@ interface ProviderData {
 
 const PROVIDERS: Record<string, ProviderData> = {
   openai: {
-    label: "OpenAI",
+    label: "ChatGPT",
     color: "#10a37f",
     models: [
       { name: "GPT-5.2", input: 1.75, output: 14, contextWindow: "1M" },
@@ -152,7 +152,7 @@ export default function TokenCalculator({
   return (
     <div className="space-y-6">
       {/* Provider Tabs */}
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex gap-2 justify-center items-center w-full">
         {Object.entries(PROVIDERS).map(([key, p]) => {
           const isActive = activeProvider === key;
           const commonClass = `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
