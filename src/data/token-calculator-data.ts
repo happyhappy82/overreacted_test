@@ -22,7 +22,7 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       "GPT-5.2, GPT-5, GPT-4.1, GPT-4o, o3, o4-mini 등 ChatGPT 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 ChatGPT 토큰 계산기.",
     heroSubtitle: "ChatGPT 모델 전용 토큰 계산",
     heroDescription:
-      "GPT-5.2, GPT-5, GPT-4.1, o3 등 ChatGPT 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
+      "GPT-5.2, GPT-5, GPT-4.1, o3 등 ChatGPT(챗GPT) 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
     faqs: [
       {
         question: "GPT API 토큰이란 무엇인가요?",
@@ -61,7 +61,7 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       "Claude Opus 4.5, Sonnet 4.5, Haiku 4.5, Opus 4.1 등 Anthropic Claude 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 Claude 토큰 계산기.",
     heroSubtitle: "Anthropic Claude 모델 전용 토큰 계산",
     heroDescription:
-      "Claude Opus 4.5, Sonnet 4.5, Haiku 4.5 등 Anthropic 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
+      "Claude(클로드) Sonnet 5, Opus 4.5, Sonnet 4.5, Haiku 4.5 등 Anthropic 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
     faqs: [
       {
         question: "Claude API 토큰이란 무엇인가요?",
@@ -101,7 +101,7 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       "Gemini 2.5 Pro, 2.5 Flash, 2.0 Flash, 3 Pro Preview 등 Google Gemini 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 Gemini 토큰 계산기.",
     heroSubtitle: "Google Gemini 모델 전용 토큰 계산",
     heroDescription:
-      "Gemini 2.5 Pro, 2.5 Flash, 3 Pro Preview 등 Google 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
+      "Gemini(제미나이) 2.5 Pro, 2.5 Flash, 3 Pro Preview 등 Google 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
     faqs: [
       {
         question: "Gemini API 토큰이란 무엇인가요?",
@@ -140,7 +140,7 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       "Perplexity Sonar Pro, Sonar, Sonar Reasoning Pro, Sonar Deep Research 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 Perplexity 토큰 계산기.",
     heroSubtitle: "Perplexity 모델 전용 토큰 계산",
     heroDescription:
-      "Sonar Pro, Sonar Deep Research 등 Perplexity 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
+      "Sonar Pro, Sonar Deep Research 등 Perplexity(퍼플렉시티) 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
     faqs: [
       {
         question: "Perplexity API 토큰이란 무엇인가요?",
