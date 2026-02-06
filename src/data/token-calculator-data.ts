@@ -56,12 +56,12 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
     providerKey: "claude",
     title: "Claude API 토큰 계산기",
     metaTitle:
-      "Claude API 토큰 계산기 — Opus 4.5, Sonnet 4.5, Haiku 비용 계산 | 에이정",
+      "Claude API 토큰 계산기 — Opus 4.6, Opus 4.5, Sonnet 4.5, Haiku 비용 계산 | 에이정",
     description:
-      "Claude Opus 4.5, Sonnet 4.5, Haiku 4.5, Opus 4.1 등 Anthropic Claude 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 Claude 토큰 계산기.",
+      "Claude Opus 4.6, Opus 4.5, Sonnet 4.5, Haiku 4.5, Opus 4.1 등 Anthropic Claude 모델의 토큰 수와 API 비용을 실시간으로 계산하세요. 무료 Claude 토큰 계산기.",
     heroSubtitle: "Anthropic Claude 모델 전용 토큰 계산",
     heroDescription:
-      "Claude(클로드) Sonnet 5, Opus 4.5, Sonnet 4.5, Haiku 4.5 등 Anthropic 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
+      "Claude(클로드) Opus 4.6, Opus 4.5, Sonnet 4.5, Haiku 4.5 등 Anthropic 모든 모델의 토큰 수와 API 비용을 실시간으로 계산하세요.",
     faqs: [
       {
         question: "Claude API 토큰이란 무엇인가요?",
@@ -70,9 +70,9 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       },
       {
         question:
-          "Claude Opus 4.5와 Sonnet 4.5는 어떤 차이가 있나요?",
+          "Claude Opus 4.6과 Opus 4.5는 어떤 차이가 있나요?",
         answer:
-          "Claude Opus 4.5는 최상위 모델로 복잡한 분석과 창작에 뛰어나며 입력 $5/출력 $25입니다. Sonnet 4.5는 성능과 비용의 균형이 좋은 모델로 입력 $3/출력 $15입니다. 일반적인 업무에는 Sonnet 4.5가, 높은 정확도가 필요한 작업에는 Opus 4.5가 적합합니다.",
+          "Claude Opus 4.6은 에이전트 구축과 코딩에 최적화된 최신 최상위 모델로, Opus 4.5와 동일한 가격(입력 $5/출력 $25)에 향상된 성능을 제공합니다. 200K 토큰 초과 시 입력 $10/출력 $37.50이 적용됩니다. Sonnet 4.5는 성능과 비용의 균형이 좋은 모델로 입력 $3/출력 $15입니다.",
       },
       {
         question: "Claude Haiku 4.5는 어떤 용도에 적합한가요?",
@@ -87,7 +87,7 @@ export const PROVIDER_PAGES: ProviderPageData[] = [
       {
         question: "Claude API 비용을 절약하는 방법이 있나요?",
         answer:
-          "작업 복잡도에 따라 모델을 구분하여 사용하세요. 간단한 분류/요약은 Haiku 4.5, 일반 업무는 Sonnet 4.5, 고난도 분석은 Opus 4.5로 나누면 비용을 효과적으로 관리할 수 있습니다. 또한 프롬프트 캐싱을 활용하면 반복 입력 비용을 줄일 수 있습니다.",
+          "작업 복잡도에 따라 모델을 구분하여 사용하세요. 간단한 분류/요약은 Haiku 4.5, 일반 업무는 Sonnet 4.5, 에이전트 구축과 코딩은 Opus 4.6으로 나누면 비용을 효과적으로 관리할 수 있습니다. 또한 프롬프트 캐싱을 활용하면 반복 입력 비용을 줄일 수 있습니다.",
       },
     ],
   },

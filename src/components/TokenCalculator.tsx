@@ -37,6 +37,7 @@ const PROVIDERS: Record<string, ProviderData> = {
     label: "Claude",
     color: "#d97706",
     models: [
+      { name: "Claude Opus 4.6", input: 5, output: 25, contextWindow: "200K" },
       { name: "Claude Opus 4.5", input: 5, output: 25, contextWindow: "200K" },
       { name: "Claude Sonnet 4.5", input: 3, output: 15, contextWindow: "200K" },
       { name: "Claude Haiku 4.5", input: 1, output: 5, contextWindow: "200K" },
