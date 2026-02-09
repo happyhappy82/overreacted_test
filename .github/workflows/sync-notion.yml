@@ -73,6 +73,18 @@ jobs:
           git pull --rebase origin main
           git push origin main
 
+      - name: Trigger Vercel Deploy
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$VERCEL_DEPLOY_HOOK" ]; then
+            echo "🚀 Vercel 배포 트리거 중..."
+            curl -s -X POST "$VERCEL_DEPLOY_HOOK"
+            echo ""
+            echo "✅ Vercel 배포 트리거 완료"
+          fi
+
       - name: Check for published slug
         if: steps.check_changes.outputs.has_changes == 'true'
         id: check_slug
